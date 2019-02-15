@@ -1,3 +1,3 @@
 #!/bin/bash
 rm TEST*
-rm *.h264
+rm *.mp4
