@@ -4,14 +4,15 @@
 import time
 import smbus
 import os
+import sys
 
 #import all of the devices on the bus for now
 from i2cMPU60500 import MPU60500
 bus = smbus.SMBus(1)
 
 #defince product name
-PRODUCT_NAME ="handcam"
-DATA_PATH="TEST"
+PRODUCT_NAME = "*"
+DATA_PATH= = sys.argv[1]
 
 
 # extanciate and configure all of the objects
