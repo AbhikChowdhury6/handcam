@@ -29,7 +29,7 @@
             "type": "python",
             "request": "launch",
             "module": "enter-your-module-name-here",
-            "args":["arg1", "arg2"],
+            "args":["/home/chowder/1550419318.666945617-handcam-bottomCam.mp4", "/home/chowder/1550419316.586681638-handcam-topCamera.mp4"],
             "console": "integratedTerminal"
         },
         {
