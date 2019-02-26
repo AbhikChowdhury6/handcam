@@ -12,7 +12,7 @@ bus = smbus.SMBus(1)
 
 #defince product name
 PRODUCT_NAME = "*"
-DATA_PATH= = sys.argv[1]
+DATA_PATH = = sys.argv[1]
 
 
 # extanciate and configure all of the objects

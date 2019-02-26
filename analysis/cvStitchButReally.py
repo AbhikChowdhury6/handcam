@@ -6,8 +6,8 @@ import time
 #vid1 = sys.argv[1]
 #vid2 = sys.argv[2]
 
-vid1 = '/home/chowder/1550419318.666945617-handcam-bottomCam.mp4'
-vid2 = '/home/chowder/1550419316.586681638-handcam-topCamera.mp4'
+vid1 = '/home/chowder/1551119463.666197034--.mp4'
+vid2 = '/home/chowder/1550594841.134619449-handcam-topcamera.mp4'
 
 
 vid1StartTimestr = vid1.split("/")[3].split("-")[0]
@@ -77,7 +77,7 @@ while (vid1Timestamps[vid1Start] < vid2Timestamps[0]):
 
 while (vid2Timestamps[vid2Start] < vid1Timestamps[0]):
     vid2Start += 1
-
+[vid1f[vid1Start + frame],vid2f[vid2Start + frame]]
 while (vid1Timestamps[vid1End] > vid2Timestamps[vid2End]):
     vid1End -= 1
 
