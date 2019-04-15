@@ -20,7 +20,7 @@ cd ..
 
 zip -r $filename.zip data
 
-scp trialNum*.zip $2:
+scp $trialNum*.zip $2:
 rm -rf data
 mkdir data
 cd data
