@@ -2,7 +2,7 @@
 #and give them option to tag (1234) (0 to remove)
 
 import cv2
-
+import pickle
 #vid1 = sys.argv[1]
 
 vid1 = '/home/chowder/Documents/1550419316.586681638-handcam-topCamera.mp4'
@@ -47,5 +47,7 @@ while cmd != "q":
 
 
 #write tags to a file
+pickle.dump(tags,"tags.p", "wb")
+#TAGS_f = open( "tags.csv", "a+")
 
 #cv2.destroyAllWindows()
