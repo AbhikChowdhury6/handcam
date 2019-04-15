@@ -9,12 +9,11 @@
 
 
 
-trialNum = $1
-
-deviceName = $3
+trialNum=$1
+deviceName=$3
 t="$(date +"%s.%N")"
 
-filename = $deviceName-$trialNum-$t
+$filename = $deviceName-$trialNum-$t
 
 cd ..
 
