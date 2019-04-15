@@ -8,6 +8,6 @@ trialNumber=$1
 placeToSend=$2
 
 trap 'kill %1;' SIGINT
-bash VideoCap.sh $trialNumber bottomCam -vf -hf & python IMUlogging.py $trialNumber & python logSerialPressure.py $trialNumber 
+bash ~/handcam/VideoCap.sh $trialNumber bottomCam -vf -hf & python ~/handcam/IMUlogging.py $trialNumber & python ~/handcam/logSerialPressure.py $trialNumber 
 
 bash send.sh $trialNumber $placeToSend bottomCam
