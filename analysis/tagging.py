@@ -21,6 +21,7 @@ while(cap1.isOpened()):
 
 cmd = ""
 frame = 0
+tags = {}
 
 while cmd != "q":
     if cmd == "a":
@@ -32,15 +33,15 @@ while cmd != "q":
     if cmd == "f":
         frame += 10
     if cmd.isnumeric():
-        tags.append(frame : cmd)
+        tags[frame] = cmd
     if cmd == "x":
-        tags.remove(frame)
+        tags.pop(frame)
     if frame < 0:
         frame = 0
     if frame >= len(vid1i):
         frame = len(vid1i)-1
     #display the frame
-    cv2.imshow('Image',curr_frame)
+    cv2.imshow('Image',vid1i[frame])
     cv2.waitKey(2)
 
 
