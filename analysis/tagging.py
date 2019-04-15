@@ -5,7 +5,7 @@ import cv2
 
 #vid1 = sys.argv[1]
 
-vid1 = '/home/chowder/1550594841.134619449-handcam-topcamera.mp4'
+vid1 = '/home/chowder/Documents/1550419316.586681638-handcam-topCamera.mp4'
 
 
 vid1i = []
@@ -24,6 +24,7 @@ frame = 0
 tags = {}
 
 while cmd != "q":
+    cmd = input("enter cmd")
     if cmd == "a":
         frame -= 10
     if cmd == "s":

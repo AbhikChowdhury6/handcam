@@ -10,16 +10,18 @@
 
 
 trialNum=$1
+placeToSend=$2
 deviceName=$3
+
 t="$(date +"%s.%N")"
 
-$filename = $deviceName-$trialNum-$t
+$filename=$deviceName-$trialNum-$t
 
 cd ..
 
 zip -r $filename.zip data
 
-scp $trialNum*.zip $2:
+scp $trialNum*.zip $placeToSend:
 rm -rf data
 mkdir data
 cd data
