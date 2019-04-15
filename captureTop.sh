@@ -10,4 +10,4 @@ placeToSend=$2
 trap 'kill %1;' SIGINT
 bash /home/pi/handcam/VideoCap.sh $trialNumber topCam & python3 /home/pi/handcam/BNOlogging.py $trialNumber & python /home/pi/handcam/logSerialPressure.py $trialNumber 
 
-bash send.sh $trialNumber $placeToSend topCam
+bash /home/pi/handcam/send.sh $trialNumber $placeToSend topCam
