@@ -17,13 +17,15 @@ t="$(date +"%s.%N")"
 
 filename=$deviceName-$trialNum-$t
 
-mkdir data$trialNum
+foldername=data$trialNum
+
+mkdir $foldername
 
 mv *.mp4 /home/pi/data$trialNum
 mv *.csv /home/pi/data$trialNum
 #cd ..
 
-zip -r $filename.zip data
+zip -r $filename.zip $foldername
 
 scp $trialNum*.zip $placeToSend:
 #rm -rf data
