@@ -27,7 +27,7 @@ mv *.csv /home/pi/data$trialNum
 
 zip -r $filename.zip $foldername
 
-scp $trialNum*.zip $placeToSend:
+scp $foldername.zip $placeToSend:
 #rm -rf data
 #mkdir data
 #cd data
