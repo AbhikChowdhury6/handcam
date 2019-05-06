@@ -8,6 +8,4 @@ trialNumber=$1
 placeToSend=$2
 
 trap 'kill %1;' SIGINT
-bash /home/pi/handcam/VideoCap.sh $trialNumber bottomCam -vf -hf
-
-bash /home/pi/handcam/send.sh $trialNumber $placeToSend bottomCam
+bash /home/pi/handcam/VideoCap.sh $trialNumber bottomCam -vf -hf -rot 270

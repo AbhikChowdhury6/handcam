@@ -24,7 +24,7 @@ for i in range(numStreams):
 
 
 
-arduinoData = serial.Serial(comPort, 9600) #Creating our serial object named arduinoData
+arduinoData = serial.Serial(comPort, 115200) #Creating our serial object named arduinoData
 plt.ion() #Tell matplotlib you want interactive mode to plot live data
 cnt=0
 
@@ -58,7 +58,8 @@ while True: # While loop that loops forever
     while (arduinoData.inWaiting()==0): #Wait here until there is data
         pass #do nothing
     arduinoString = arduinoData.readline() #read the line of text from the serial port
-    dataArray = arduinoString.split()   #Split it into an array called dataArray
+    subStr = ""
+    dataArray = arduinoString[1:-3].split(",")   #Split it into an array called dataArray
     
     for i in range(numStreams):
         print(dataArray[i])
