@@ -10,7 +10,6 @@ from board import SDA, SCL
 
 #import all of the devices on the bus for now
 from i2cBNO0550 import BNO0550
-from i2cBNO0551 import BNO0551
 
 i2c = I2C(SCL, SDA)
 
