@@ -13,27 +13,23 @@ run StreamVideo.sh
         2223 -vf -hf -rot 90
 check to see if horizon is level
 
-plug the side arduino into your computer and run 
-    sudo python liveSerialGraph.py /dev/ttyUSB0 p1 p2 p3
-        replace /dev/ttyUSB0 with the location on your machine if neccisary
-have them open and close their hand and check if graphed values change
+
+have them open and close their hand every 3 seconds and check if LED on arduino nano flashes on and off
 
 /////Capture
 run on the bottom pi
     bash handcam/videoCap.sh TRIAL_NAME -vf -hf -rot 90
 
 run on the top pi
-    bash handcam/videoCapture.sh TRIAL_NAME -rot 270 &
-    python handcam/logSerialPressure.py TRIAL_NAME &
+    bash handcam/captureTop.sh TRIAL_NAME
+
+if there is an errorreapeat the BNO command until it works, it might take a good number of tries (>30)
     python3 handcam/BNOLogging.py TRIAL_NAME 
 
-reapeat the BNO command until it works, it might take a good number of tries (>30)
-
-note the process numbers on the top pi so we can kill them once the trial is done
 
 start live tagging program from the trial name directory
 
-for every exersize specify the experement type and the object
+for every exersize the experement type and the object will be pre populated, update if neccissary by pressing e
 press enter when prompetd to indecate the start of the experment and again after
 
 after all experements are over exit and kill all of the programs and consolidate the data

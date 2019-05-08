@@ -1,10 +1,10 @@
 import time
-
+import sys
 #read in input and log to a file the type of experment, trial name the timestamp
-TAGS_F = open( "tags.csv", "a+")
+TAGS_F = open( sys.argv[1] + "tags.csv", "a+")
 
-EXP = [1,1,1,2,2,2,2,2,2,3,3,3,3,3,3]
-OBJ = ["c","p","s","c","p","s","k","t","m","c","p","s","k","t","m"]
+EXP = [0,0,0,0,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3]
+OBJ = ["c", "k","t", "m", "c","p","s","c","p","s","k","t","m","c","p","s","k","t","m"] 
 
 i = 0
 
@@ -21,6 +21,7 @@ while True:
         experementType = input("enter experement type ")
         objectType = input("enter object type ")
         _ = input("press enter to indicate the start time")
+        i = i - 1
 
     startTime = time.strftime('%d-%m-%Y-%H-%M-%S', time.localtime()) + "." + str(round(time.time() * 1000))
 
