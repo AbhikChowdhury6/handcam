@@ -1,5 +1,5 @@
 make a folder for the trial name and move into it
-call demographic information from that folder
+call demographics.pyy information from that folder
 
 put on device
 
@@ -18,16 +18,16 @@ have them open and close their hand every 3 seconds and check if LED on arduino 
 
 /////Capture
 run on the bottom pi
-    bash handcam/videoCap.sh TRIAL_NAME -vf -hf -rot 90
+    bash handcam/captureBottom.sh TRIAL_NAME 
 
 run on the top pi
     bash handcam/captureTop.sh TRIAL_NAME
 
-if there is an errorreapeat the BNO command until it works, it might take a good number of tries (>30)
+if there is an error reapeat the BNO command until it works, it might take a good number of tries (>10)
     python3 handcam/BNOLogging.py TRIAL_NAME 
 
 
-start live tagging program from the trial name directory
+start live tagging program from the directory with the trial name 
 
 for every exersize the experement type and the object will be pre populated, update if neccissary by pressing e
 press enter when prompetd to indecate the start of the experment and again after

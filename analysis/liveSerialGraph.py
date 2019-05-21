@@ -21,7 +21,10 @@ for i in range(numStreams):
     values.append([])
 
 
-
+#
+#
+#
+#
 
 
 arduinoData = serial.Serial(comPort, 115200) #Creating our serial object named arduinoData
