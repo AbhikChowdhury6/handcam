@@ -27,7 +27,7 @@ divider = 1
 second = 0
 starttime=time.time()
 count = 0
-
+lastTime = time.time()
 while True:
 
   if (divider % bno0550.REFRESH_RATE == 0):
@@ -35,7 +35,7 @@ while True:
 
   divider = divider + 1
   
-   if time.time() - lastTime > 0.1:
+  if time.time() - lastTime > 0.1:
      print("skipped!")
   lastTime = time.time()
   time.sleep(0.05 - ((time.time() - starttime) % 0.05))
