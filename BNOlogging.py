@@ -26,12 +26,17 @@ print (time.strftime('%d-%m-%Y-%H-%M-%S', time.localtime()))
 divider = 1
 second = 0
 starttime=time.time()
+count = 0
+
 while True:
 
   if (divider % bno0550.REFRESH_RATE == 0):
       bno0550.log()
 
-
   divider = divider + 1
-  time.sleep(0.01 - ((time.time() - starttime) % 0.01))
+  
+   if time.time() - lastTime > 0.1:
+     print("skipped!")
+  lastTime = time.time()
+  time.sleep(0.05 - ((time.time() - starttime) % 0.05))
 
