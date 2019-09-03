@@ -7,4 +7,4 @@
 trialNumber=$1
 
 trap 'kill %1;' SIGINT
-bash /home/pi/handcam/VideoCap.sh $trialNumber topCam -rot 90 & python /home/pi/handcam/logSerialPressure.py $trialNumber & python3 /home/pi/handcam/BNOlogging.py $trialNumber 
+bash /home/pi/handcam/VideoCap.sh $trialNumber topCam -rot 90 & python /home/pi/handcam/logSerialPressure.py $trialNumber
