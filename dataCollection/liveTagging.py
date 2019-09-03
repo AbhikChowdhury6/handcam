@@ -3,8 +3,8 @@ import sys
 #read in input and log to a file the type of experment, trial name the timestamp
 TAGS_F = open( sys.argv[1] + "tags.csv", "a+")
 
-EXP = [0,0,0,0,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3]
-OBJ = ["c", "k","t", "m", "c","p","s","c","p","s","k","t","m","c","p","s","k","t","m"] 
+EXP = [0,0,0,0,0,0,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3]
+OBJ = ["c", "p","s", "k" ,"t","m", "c","p","s","c","p","s","k","t","m","c","p","s","k","t","m"] 
 
 output = []
 
