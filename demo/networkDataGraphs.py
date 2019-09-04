@@ -25,8 +25,8 @@ async def dataCap(websocket, path):
 
 start_server = websockets.serve(dataCap, "", 8765)
 
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+asyncio.get_event_loop().run_until_complete()
+asyncio.get_event_loop().run_forever(start_server)
 
 cnt=0
 
