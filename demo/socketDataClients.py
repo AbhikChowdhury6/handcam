@@ -11,7 +11,7 @@ targetAddr = sys.argv[1]
 comPort = "/dev/ttyUSB0"
 arduinoData = serial.Serial(comPort, 115200) #Creating our serial object named arduinoData
 
-async def sendDataContinually(data):
+async def sendDataContinually():
     uri = "ws://" + targetAddr + ":8765"
     async with websockets.connect(uri) as websocket:
         while True:
