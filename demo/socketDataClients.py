@@ -19,7 +19,7 @@ async def sendDataContinually():
                 pass #do nothing
             arduinoString = arduinoData.readline() #read the line of text from the serial port
             
-            dat = str(time.time()) + "," + arduinoString
+            dat = str(time.time()) + "," + str(arduinoString)
             await websocket.send(dat)
             print(f"> {dat}")
 

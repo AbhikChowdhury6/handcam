@@ -14,7 +14,7 @@ datatypes = ["Accel X", "Accel Y", "Accel Z", "P1", "P2", "P3"]
 values = [[],[],[],[],[],[]]
 lastVal = ""
 
-async def hello(websocket, path):
+async def dataCap(websocket, path):
     dat = await websocket.recv()
     print(f"< {dat}")
     lastVal = dat
@@ -23,13 +23,14 @@ async def hello(websocket, path):
     await websocket.send(ok)
     print(f"> {ok}")
 
-start_server = websockets.serve(hello, "localhost", 8765)
+start_server = websockets.serve(dataCap, "", 8765)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
 
 cnt=0
 
+print("I am here!")
 
 def makeFig(data, title, xlabel): #Create a function that makes our desired plot
     plt.ylim(0,512)                                 #Set y min and max values
