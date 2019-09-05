@@ -20,6 +20,7 @@ while True:
     arduinoString = arduinoData.readline() #read the line of text from the serial port
     
     dat = str(time.time()) + "," + str(arduinoString)
+    count = count + 1
     if (count == subSample):
         count = 0
         print(dat)
