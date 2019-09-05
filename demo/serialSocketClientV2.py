@@ -5,7 +5,7 @@ import sys
 
 
 serverAddr = sys.argv[1]
-subSample = sys.argv[2]
+subSample = int(sys.argv[2])
 
 ws = websocket.create_connection("ws://" + serverAddr + ":9001")
 
