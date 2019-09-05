@@ -1,7 +1,11 @@
-import asyncio
-import websockets
+import websocket
+import sys
 import numpy
 import matplotlib.pyplot as plt
+
+
+serverAddr = sys.argv[1]
+ws = websocket.create_connection("ws://" + serverAddr + ":9001")
 
 
 plt.ion() #Tell matplotlib you want interactive mode to plot live data
@@ -11,25 +15,8 @@ numStreams = 6
 datatypes = ["Accel X", "Accel Y", "Accel Z", "P1", "P2", "P3"]
 values = [[],[],[],[],[],[]]
 lastVal = ""
-
-async def dataCap(websocket, path):
-    dat = await websocket.recv()
-    print(f"< {dat}")
-    lastVal = dat
-    #buffer.append()
-
-    await websocket.send(ok)
-    print(f"> {ok}")
-
-start_server = websockets.serve(dataCap, "", 9001)
-
-asyncio.get_event_loop().run_until_complete(start_server)
-print("at forever")
-asyncio.get_event_loop().run_forever()
-print("it got past forever")
 cnt=0
 
-print("I am here!")
 
 def makeFig(data, title, xlabel): #Create a function that makes our desired plot
     plt.ylim(0,512)                                 #Set y min and max values
@@ -57,8 +44,8 @@ for i in range(numStreams):
         plt.plot(values[i], 'ro-', label=datatypes[i])       #plot the temperature
         plt.legend(loc='upper left')                    #plot the legend
 
-while True: # While loop that loops forever
-    
+
+while True:
     subStr = ""
     dataArray = lastVal.split(",")   #Split it into an array called dataArray
     
@@ -84,4 +71,11 @@ while True: # While loop that loops forever
     if(cnt>50):                            #If you have 50 or more points, delete the first one from the array
         for i in range(numStreams):
             values[i].pop(0)
+    
+    
+    print("Receiving...")
+    result =  ws.recv()
+    print("Received '%s'" % result)
 
+
+ws.close()
