@@ -46,14 +46,33 @@ for i in range(numStreams):
 
 
 while True:
+    print("Receiving...")
+    result =  ws.recv()
+    print("Received '%s'" % result)
+
+    
     subStr = ""
-    dataArray = lastVal.split(",")   #Split it into an array called dataArray
+
+    #split by ( and )
+    #split the [1] by ,
+    #grab the first 3 for pressure
+    #grab the 14, 15 and 16 for the lin accel
+
+    packetList = result.split('(')   #Split it into an array called dataArray
+    print(packetList)
+    dataList = packetList[1].split(',')
+    
     
     #parse pressure
+    values[0].append(dataList[0])
+    values[1].append(dataList[1])
+    values[2].append(dataList[2])
+    
     #parse accel
-    for i in range(numStreams):
-        print(dataArray[i])
-        values[i].append(float(dataArray[i]))
+    values[3].append(dataList[14])
+    values[4].append(dataList[15])
+    values[5].append(dataList[16])
+
 
     #plt.clf()
     for i in range(numStreams):
@@ -73,9 +92,7 @@ while True:
             values[i].pop(0)
     
     
-    print("Receiving...")
-    result =  ws.recv()
-    print("Received '%s'" % result)
+    
 
 
 ws.close()
