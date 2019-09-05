@@ -14,8 +14,7 @@ arduinoData = serial.Serial(comPort, 115200) #Creating our serial object named a
 
 count = 0
 
-while True:
-    count = count + 1 
+while True: 
     while (arduinoData.inWaiting()==0): #Wait here until there is data
         pass #do nothing
     arduinoString = arduinoData.readline() #read the line of text from the serial port
@@ -25,6 +24,8 @@ while True:
         count = 0
         print(dat)
         ws.send(dat)
+
+    count = count + 1
 
 
 ws.close()
