@@ -34,14 +34,14 @@ buffer_len = INF_LEN*2 + pre_conv_kernel + post_conv_kernel - 2
 
 camlist = pygame.camera.list_cameras()
 if camlist:
-    cam = pygame.camera.Camera(camlist[0],(640,480))
+	cam = pygame.camera.Camera(camlist[0],(640,480))
 
 cam.start()
 
 
 starttime=time.time()
 lastTime = time.time()
-
+	
 def send_picture(cam, url):
 	image = cam.get_image()
 	pygame.image.save(image,"f1.jpg")
@@ -81,13 +81,13 @@ class simple_buffer():
 
 def get_data(sensor, prev, mask = 100):
 	acd = np.array(sensor.accelerometer)
-    gyd = np.array(sensor.gyroscope)
-    grd = np.array(sensor.gravity)
-    # remove outliers
-    acd = acd * (acd <= mask) + prev[0] * (acd > mask)
-    gyd = gyd * (gyd <= mask) + prev[1] * (gyd > mask)
-    grd = grd * (grd <= mask) + prev[2] * (grd > mask)
-    return acd, gyd, grd
+	gyd = np.array(sensor.gyroscope)
+	grd = np.array(sensor.gravity)
+	# remove outliers
+	acd = acd * (acd <= mask) + prev[0] * (acd > mask)
+	gyd = gyd * (gyd <= mask) + prev[1] * (gyd > mask)
+	grd = grd * (grd <= mask) + prev[2] * (grd > mask)
+	return acd, gyd, grd
 
 def interp_grav(data):
 	grav_mag = np.sqrt(np.sum(data*data,axis=1))
@@ -125,12 +125,12 @@ gyr_buffer = simple_buffer(buffer_len)
 grv_buffer = simple_buffer(buffer_len)
 
 while True:
-    #read IMU
-    #signal processing
-    #take picture
+	#read IMU
+	#signal processing
+	#take picture
 
-    # collect the data
-	acd, gyd, grd = get_data(IMU, (acd,gyd,grd))    
+	# collect the data
+	acd, gyd, grd = get_data(IMU, (acd,gyd,grd))	
 	# buffer
 	acc_buffer.add(acd)
 	gyr_buffer.add(gyd)
@@ -146,11 +146,11 @@ while True:
 			#thread.start_new_thread(send_picture, (cam, url))
 			print("inflection at {}".format(time.time()))
 			# if this introduces a lag, these can be invoked
-		    #acc_buffer.flush()
-		    #gyr_buffer.flush()
-		    #grv_buffer.flush()
-    lastTime = time.time()
-    time.sleep(0.05 - ((time.time() - starttime) % 0.05))
+			#acc_buffer.flush()
+			#gyr_buffer.flush()
+			#grv_buffer.flush()
+	lastTime = time.time()
+	time.sleep(0.05 - ((time.time() - starttime) % 0.05))
 
 
 
