@@ -1,7 +1,11 @@
 import requests
+import base64
+
 import time
 import sys
 import thread
+
+from gpiozero import LED
 
 import pygame
 import pygame.camera
@@ -11,7 +15,9 @@ from busio import I2C
 from board import SDA, SCL
 import adafruit_bno055
 
-serverAddr = sys.argv[1]
+led = LED(21)
+
+url = sys.argv[1]
 
 pygame.init()
 pygame.camera.init()
@@ -43,20 +49,23 @@ starttime=time.time()
 lastTime = time.time()
 	
 def send_picture(cam, url):
-	image = cam.get_image()
-	pygame.image.save(image,"f1.jpg")
-
-	image_path = "f1.jpg"
-	b64_image = ""
-	# Encoding the JPG,PNG,etc. image to base64 format
-	with open(image_path, "rb") as imageFile:
-		b64_image = base64.b64encode(imageFile.read())
+    led.on()
+    image = cam.get_image()
+    pygame.image.save(image,"f1.jpg")
+  
+    image_path = "f1.jpg"
+    b64_image = ""
+    # Encoding the JPG,PNG,etc. image to base64 format
+    with open(image_path, "rb") as imageFile:
+        b64_image = base64.b64encode(imageFile.read())
 
 	# data to be sent to api
-	data = {'b64': b64_image}
+    data = {'b64': b64_image}
 
 	# sending post request and saving response as response object
-	r = requests.post(url=url, data=data)
+    r = requests.post(url=url, data=data)
+    print(r)
+    led.off()
 
 
 class simple_buffer():
