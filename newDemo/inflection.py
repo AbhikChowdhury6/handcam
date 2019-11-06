@@ -152,7 +152,7 @@ while True:
 		accLP = lowpass(acc.report() - grvV, pre_conv_kernel)
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
-			#thread.start_new_thread(send_picture, (cam, url))
+			thread.start_new_thread(send_picture, (cam, url))
 			print("inflection at {}".format(time.time()))
 			# if this introduces a lag, these can be invoked
 			#acc_buffer.flush()
