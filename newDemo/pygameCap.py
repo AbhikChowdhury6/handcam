@@ -4,12 +4,12 @@ from pygame.locals import *
 
 import requests
 import base64
-
+import sys
 
 pygame.init()
 pygame.camera.init()
 
-url="http://0.0.0.0:5000/upload/"
+url=sys.argv[1]#"http://0.0.0.0:5000/upload/"
 
 camlist = pygame.camera.list_cameras()
 if camlist:
