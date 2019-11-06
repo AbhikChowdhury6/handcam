@@ -3,7 +3,7 @@ import base64
 
 import time
 import sys
-#import thread
+import threading
 
 from gpiozero import LED
 
@@ -133,6 +133,8 @@ acc_buffer = simple_buffer(buffer_len)
 gyr_buffer = simple_buffer(buffer_len)
 grv_buffer = simple_buffer(buffer_len)
 
+camera_tread = False
+
 while True:
 	#read IMU
 	#signal processing
@@ -152,9 +154,16 @@ while True:
 		accLP = lowpass(acc.report() - grvV, pre_conv_kernel)
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
-#			thread.start_new_thread(send_picture, (cam, url))
-			send_picture(cam,url)
-			print("inflection at {}".format(time.time()))
+			print("Inflection point at {}".format(time.time()))			
+			if camera_tread:
+				if camera_tread.isAlive():
+					camera_tread = threading.Thread(send_picture, (cam, url))
+					camera_tread.start()
+				else:
+					print("Camera busy")
+			else:
+				camera_tread = threading.Thread(send_picture, (cam, url))
+				camera_tread.start()
 			# if this introduces a lag, these can be invoked
 			#acc_buffer.flush()
 			#gyr_buffer.flush()
