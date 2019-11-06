@@ -71,7 +71,7 @@ def image_classifier():
     r = requests.post('http://localhost:9000/v1/models/ImageClassifier:predict', json=payload)
     print(r)
     # Decoding results from TensorFlow Serving server
-    pred = json.loads(r.content.decode('utf-8'))
+    psred = json.loads(r.content.decode('utf-8'))
 
     #####form sqlite entry using the predicted class
     with sqlite3.connect("database.db") as con:
