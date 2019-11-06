@@ -3,7 +3,7 @@ import base64
 
 import time
 import sys
-import thread
+#import thread
 
 from gpiozero import LED
 
@@ -13,7 +13,7 @@ from pygame.locals import *
 
 from busio import I2C
 from board import SDA, SCL
-import adafruit_bno055
+from BNO055 import BNO055
 
 led = LED(21)
 
@@ -26,7 +26,7 @@ pygame.camera.init()
 i2c = I2C(SCL, SDA)
 
 address = 0x28
-IMU = adafruit_bno055.BNO055(i2c,address)
+IMU = BNO055(i2c,address)
 #epsilon for judging zero of an inflection
 EPS = 0.3
 pre_conv_kernel = 7
@@ -152,7 +152,8 @@ while True:
 		accLP = lowpass(acc.report() - grvV, pre_conv_kernel)
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
-			thread.start_new_thread(send_picture, (cam, url))
+#			thread.start_new_thread(send_picture, (cam, url))
+			send_picture(cam,url)
 			print("inflection at {}".format(time.time()))
 			# if this introduces a lag, these can be invoked
 			#acc_buffer.flush()
