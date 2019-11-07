@@ -11,14 +11,6 @@ import threading
 
 from gpiozero import LED
 
-#import pygame
-#import pygame.camera
-#from pygame.locals import *
-
-#from busio import I2C
-#from board import SDA, SCL
-#from BNO055 import BNO055
-
 import board
 import busio
 import adafruit_bno055
@@ -29,14 +21,6 @@ led = LED(21)
 
 url = sys.argv[1]
 
-#pygame.init()
-#pygame.camera.init()
-
-
-#i2c = I2C(SCL, SDA)
-
-#address = 0x28
-#IMU = BNO055(i2c,address)
 #epsilon for judging zero of an inflection
 EPS = 0.3
 pre_conv_kernel = 7
@@ -48,24 +32,16 @@ G_PHX = 9.802
 
 buffer_len = INF_LEN*2 + pre_conv_kernel + post_conv_kernel - 2
 
-camlist = pygame.camera.list_cameras()
-if camlist:
-	cam = pygame.camera.Camera(camlist[0],(480,480))
-
-#cam.start()
-
-
 starttime=time.time()
 lastTime = time.time()
 	
-def send_picture(cam, url):
+def send_picture(url):
     led.on()
-#    image = cam.get_image()
-#    pygame.image.save(image,"f1.jpg")
-    os.system("fswebcam f1.jpg")
+    os.system("fswebcam -r 480x480 f1.jpg")
     image_path = "f1.jpg"
     b64_image = ""
     # Encoding the JPG,PNG,etc. image to base64 format
+    time.sleep(1)
     with open(image_path, "rb") as imageFile:
         b64_image = base64.b64encode(imageFile.read())
 
@@ -102,18 +78,30 @@ def get_data(sensor, prev, mask = 100):
 	acd = np.array(sensor.acceleration)
 	gyd = np.array(sensor.gyro)
 	grd = np.array(sensor.gravity)
-	print(str(acd) + "\t" + str(gyd))
+	print(str(acd) + "\t" + str(gyd) + "\t" + str(grd))
 	# remove outliers
 	acd = acd * (acd <= mask) + prev[0] * (acd > mask)
 	gyd = gyd * (gyd <= mask) + prev[1] * (gyd > mask)
+	if(grd[0] == None):
+		grd = np.array([0,0,0])
 	grd = grd * (grd <= mask) + prev[2] * (grd > mask)
+
 	return acd, gyd, grd
 
 def interp_grav(data):
 	grav_mag = np.sqrt(np.sum(data*data,axis=1))
 	outliers = np.where(np.abs(grav_mag - G_PHX) > 0.01) [0]
 	#init_errs = np.where(grav_mag == 0)
-	data[outliers] = (data[outliers-1] + data[outliers+1]) / 2
+	
+	#data[outliers] = (data[outliers-1] + data[outliers+1]) / 2
+	
+
+	outliers_left = outliers - 1
+	outliers_right = outliers + 1
+	outliers_left = outliers_left * (outliers_left >= 0) + outliers_right * (outliers_left < 0)
+	outliers_right = outliers_right * (outliers_right < outliers.shape[0]) + outliers_left * (outliers_right >= outliers.shape[0])	
+	data[outliers] = (data[outliers_left] + data[outliers_right]) / 2
+
 	#data[init_errs] = data[np.max(init_errs)+1]
 	return data
 
@@ -154,31 +142,33 @@ while True:
 	# collect the data
 	acd, gyd, grd = get_data(IMU, (acd,gyd,grd))	
 	# buffer
-	acc_buffer.add(acd)
-	gyr_buffer.add(gyd)
-	grv_buffer.add(grd)
+	acc_buffer.update(acd)
+	gyr_buffer.update(gyd)
+	grv_buffer.update(grd)
 
 	if acc_buffer.ready() and gyr_buffer.ready() and grv_buffer.ready():
 		# smooth gravity
 		grvV = interp_grav(grv_buffer.report())
-		gyrLP = lowpass(gyr.report(), pre_conv_kernel)
-		accLP = lowpass(acc.report() - grvV, pre_conv_kernel)
+		gyrLP = lowpass(gyr_buffer.report(), pre_conv_kernel)
+		accLP = lowpass(acc_buffer.report() - grvV, pre_conv_kernel)
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
-			print("Inflection point at {}".format(time.time()))			
-			if camera_tread:
-				if camera_tread.isAlive():
-					camera_tread = threading.Thread(send_picture, (cam, url))
-					camera_tread.start()
-				else:
-					print("Camera busy")
-			else:
-				camera_tread = threading.Thread(send_picture, (cam, url))
-				camera_tread.start()
+			print("Inflection point at {}".format(time.time()))
+			send_picture(url)
+#			time.sleep(1)
+#			if camera_tread:
+#				if camera_tread.isAlive():
+#					camera_tread = threading.Thread(send_picture, (url))
+#					camera_tread.start()
+#				else:
+#					print("Camera busy")
+#			else:
+#				camera_tread = threading.Thread(send_picture, (url))
+#				camera_tread.start()
 			# if this introduces a lag, these can be invoked
-			#acc_buffer.flush()
-			#gyr_buffer.flush()
-			#grv_buffer.flush()
+			acc_buffer.flush()
+			gyr_buffer.flush()
+			grv_buffer.flush()
 	lastTime = time.time()
 	time.sleep(0.05 - ((time.time() - starttime) % 0.05))
 
