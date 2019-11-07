@@ -21,12 +21,14 @@ led = LED(21)
 
 url = sys.argv[1]
 
-#epsilon for judging zero of an inflection
-EPS = 0.3
-pre_conv_kernel = 7
-post_conv_kernel = 3
+#epsilon for judging zero of an inflectionEPS = 3.0
+EPS = 2.0
+Fs = 10
+sr = 1.0 / Fs
+pre_conv_kernel = 3 
+post_conv_kernel = 2 
 # length of time for an inflection point sample
-INF_LEN = 4
+INF_LEN = 2 
 #gravitational constant in phoenix
 G_PHX = 9.802
 
@@ -74,19 +76,21 @@ class simple_buffer():
 	def flush(self):
 		self.list = []
 
+
+LAST_GOOD_GRAV = np.array([0,0,0,0])
+
 def get_data(sensor, prev, mask = 100):
-	acd = np.array(sensor.acceleration)
+	acd = np.array(sensor.linear_acceleration)
 	gyd = np.array(sensor.gyro)
-	grd = np.array(sensor.gravity)
-	print(str(acd) + "\t" + str(gyd) + "\t" + str(grd))
+	#grd = np.array(sensor.quaternion)
+	#print(str(acd) + "\t" + str(gyd))
+	if(acd[0] == None):
+		acd = mask+1 
 	# remove outliers
 	acd = acd * (acd <= mask) + prev[0] * (acd > mask)
 	gyd = gyd * (gyd <= mask) + prev[1] * (gyd > mask)
-	if(grd[0] == None):
-		grd = np.array([0,0,0])
-	grd = grd * (grd <= mask) + prev[2] * (grd > mask)
 
-	return acd, gyd, grd
+	return acd, gyd
 
 def interp_grav(data):
 	grav_mag = np.sqrt(np.sum(data*data,axis=1))
@@ -120,13 +124,14 @@ def find_inf_pt(accel, gyro, eps = 0.001):
 	gyro_mag = lowpass(np.sqrt(np.sum(gyro*gyro,axis=1)),post_conv_kernel,1)
 	#inf_pt = np.logical_or(accel_mag < eps, gyro_mag < eps)
 	inf_pt = 1 * (accel_mag < eps)
-	pos_sl = np.sum(inf_pt[-INF_LEN:]) >= INF_LEN-1 and np.sum(inf_pt[-INF_LEN:-INF_LEN])  <= 1
-	neg_sl = np.sum(inf_pt[-INF_LEN:]) <= 1 and np.sum(inf_pt[-INF_LEN:-INF_LEN]) > INF_LEN-1
+	#print(np.transpose(inf_pt),end='\r')
+	pos_sl = np.sum(inf_pt[-INF_LEN:]) >= INF_LEN-1 and np.sum(inf_pt[-2*INF_LEN:-INF_LEN])  <= 1
+	neg_sl = np.sum(inf_pt[-INF_LEN:]) <= 1 and np.sum(inf_pt[-2*INF_LEN:-INF_LEN]) > INF_LEN-1
 	return pos_sl or neg_sl
 
 acd = np.array([0,0,0])
 gyd = np.array([0,0,0])
-grd = np.array([0,0,0])
+grd = np.array([0,0,0,0])
 
 acc_buffer = simple_buffer(buffer_len)
 gyr_buffer = simple_buffer(buffer_len)
@@ -140,17 +145,18 @@ while True:
 	#take picture
 
 	# collect the data
-	acd, gyd, grd = get_data(IMU, (acd,gyd,grd))	
+	acd, gyd = get_data(IMU, (acd,gyd,grd))	
 	# buffer
 	acc_buffer.update(acd)
 	gyr_buffer.update(gyd)
-	grv_buffer.update(grd)
+	#grv_buffer.update(grd)
 
-	if acc_buffer.ready() and gyr_buffer.ready() and grv_buffer.ready():
+	if acc_buffer.ready() and gyr_buffer.ready():
 		# smooth gravity
-		grvV = interp_grav(grv_buffer.report())
+		#grvV = interp_grav(grv_buffer.report())
 		gyrLP = lowpass(gyr_buffer.report(), pre_conv_kernel)
-		accLP = lowpass(acc_buffer.report() - grvV, pre_conv_kernel)
+		accLP = lowpass(acc_buffer.report(), pre_conv_kernel)
+		#print(accLP)
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
 			print("Inflection point at {}".format(time.time()))

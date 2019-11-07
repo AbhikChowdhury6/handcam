@@ -161,16 +161,16 @@ while True:
 		if inflection:
 			print("Inflection point at {}".format(time.time()))
 			#send_picture(url)
-#			time.sleep(1)
-#			if camera_tread:
-#				if camera_tread.isAlive():
-#					camera_tread = threading.Thread(send_picture, (url))
-#					camera_tread.start()
-#				else:
-#					print("Camera busy")
-#			else:
-#				camera_tread = threading.Thread(send_picture, (url))
-#				camera_tread.start()
+			time.sleep(1)
+			#if camera_tread:
+			#if camera_tread.isAlive():
+			#camera_tread = threading.Thread(send_picture, (url))
+			#camera_tread.start()
+			#else:
+			#print("Camera busy")
+			#else:
+			#camera_tread = threading.Thread(send_picture, (url))
+			#camera_tread.start()
 			# if this introduces a lag, these can be invoked
 			#acc_buffer.flush()
 			#gyr_buffer.flush()
