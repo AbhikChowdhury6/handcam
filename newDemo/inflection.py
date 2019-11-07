@@ -1,32 +1,42 @@
 import requests
 import base64
 
+import numpy as np
+
+import os
+
 import time
 import sys
 import threading
 
 from gpiozero import LED
 
-import pygame
-import pygame.camera
-from pygame.locals import *
+#import pygame
+#import pygame.camera
+#from pygame.locals import *
 
-from busio import I2C
-from board import SDA, SCL
-from BNO055 import BNO055
+#from busio import I2C
+#from board import SDA, SCL
+#from BNO055 import BNO055
+
+import board
+import busio
+import adafruit_bno055
+i2c = busio.I2C(board.SCL, board.SDA)
+IMU = adafruit_bno055.BNO055(i2c)
 
 led = LED(21)
 
 url = sys.argv[1]
 
-pygame.init()
-pygame.camera.init()
+#pygame.init()
+#pygame.camera.init()
 
 
-i2c = I2C(SCL, SDA)
+#i2c = I2C(SCL, SDA)
 
-address = 0x28
-IMU = BNO055(i2c,address)
+#address = 0x28
+#IMU = BNO055(i2c,address)
 #epsilon for judging zero of an inflection
 EPS = 0.3
 pre_conv_kernel = 7
@@ -42,7 +52,7 @@ camlist = pygame.camera.list_cameras()
 if camlist:
 	cam = pygame.camera.Camera(camlist[0],(480,480))
 
-cam.start()
+#cam.start()
 
 
 starttime=time.time()
@@ -50,9 +60,9 @@ lastTime = time.time()
 	
 def send_picture(cam, url):
     led.on()
-    image = cam.get_image()
-    pygame.image.save(image,"f1.jpg")
-  
+#    image = cam.get_image()
+#    pygame.image.save(image,"f1.jpg")
+    os.system("fswebcam f1.jpg")
     image_path = "f1.jpg"
     b64_image = ""
     # Encoding the JPG,PNG,etc. image to base64 format
@@ -89,9 +99,10 @@ class simple_buffer():
 		self.list = []
 
 def get_data(sensor, prev, mask = 100):
-	acd = np.array(sensor.accelerometer)
-	gyd = np.array(sensor.gyroscope)
+	acd = np.array(sensor.acceleration)
+	gyd = np.array(sensor.gyro)
 	grd = np.array(sensor.gravity)
+	print(str(acd) + "\t" + str(gyd))
 	# remove outliers
 	acd = acd * (acd <= mask) + prev[0] * (acd > mask)
 	gyd = gyd * (gyd <= mask) + prev[1] * (gyd > mask)

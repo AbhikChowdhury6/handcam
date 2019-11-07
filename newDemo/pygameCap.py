@@ -2,10 +2,13 @@ import pygame
 import pygame.camera
 from pygame.locals import *
 
+import os
+
 import requests
 import base64
 import sys
 
+import time
 pygame.init()
 pygame.camera.init()
 
@@ -14,12 +17,24 @@ url=sys.argv[1]#"http://0.0.0.0:5000/upload/"
 camlist = pygame.camera.list_cameras()
 print(camlist)
 
-cam = pygame.camera.Camera("/dev/video0",(480,480))
+#cam = pygame.camera.Camera("/dev/video0",(384,288))
+cam = pygame.camera.Camera(pygame.camera.list_cameras()[0])
+#cam.start()
+#while True:
+#    try:
+#        cam.start()
+#        break
+#    except Exception as e:
+#        print(start= Except, e)
+#        time.sleep(1)
 
-cam.start()
 
-image = cam.get_image()
-pygame.image.save(image,"f1.jpg")
+#cam.start()
+
+#image = cam.get_image()
+#pygame.image.save(image,"f1.jpg")
+os.system("fswebcam f1.jpg")
+
 
 print("saved!")
 image_path = "f1.jpg"
