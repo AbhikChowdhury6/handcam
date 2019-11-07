@@ -8,7 +8,7 @@ import numpy as np
 import requests
 from flask import Flask, request, jsonify, render_template
 #from keras.applications import inception_v3
-#from keras.preprocessing import image
+from keras.preprocessing import image
 
 
 
@@ -87,3 +87,18 @@ def image_classifier():
     # Returning JSON response to the frontend
     return "I saw some ?",(str(pred))
 
+
+@app.route('/test/', methods=['POST'])
+def test():
+    print("hit the test!")
+    # Decoding and pre-processing base64 image
+    rawImg = image.load_img(BytesIO(base64.b64decode(request.form['b64'])),target_size=(480, 480))
+    img = image.img_to_array(rawImg) / 255.
+
+
+    #####save image with uuid and time discriptor
+    URI="data/" + time.asctime() + ".jpg"
+    print(URI)
+    rawImg.save(URI)
+    print("tried to save")
+    return "got it!"
