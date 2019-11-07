@@ -12,14 +12,16 @@ pygame.camera.init()
 url=sys.argv[1]#"http://0.0.0.0:5000/upload/"
 
 camlist = pygame.camera.list_cameras()
-if camlist:
-    cam = pygame.camera.Camera(camlist[0],(640,480))
+print(camlist)
+
+cam = pygame.camera.Camera("/dev/video0",(480,480))
 
 cam.start()
 
 image = cam.get_image()
 pygame.image.save(image,"f1.jpg")
 
+print("saved!")
 image_path = "f1.jpg"
 b64_image = ""
 # Encoding the JPG,PNG,etc. image to base64 format

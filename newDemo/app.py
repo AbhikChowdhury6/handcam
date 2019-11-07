@@ -7,8 +7,10 @@ import time
 import numpy as np
 import requests
 from flask import Flask, request, jsonify, render_template
-from keras.applications import inception_v3
-from keras.preprocessing import image
+#from keras.applications import inception_v3
+#from keras.preprocessing import image
+
+
 
 # from flask_cors import CORS
 
@@ -71,7 +73,7 @@ def image_classifier():
     r = requests.post('http://localhost:9000/v1/models/ImageClassifier:predict', json=payload)
     print(r)
     # Decoding results from TensorFlow Serving server
-    psred = json.loads(r.content.decode('utf-8'))
+    pred = json.loads(r.content.decode('utf-8'))
 
     #####form sqlite entry using the predicted class
     with sqlite3.connect("database.db") as con:

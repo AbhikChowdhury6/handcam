@@ -40,7 +40,7 @@ buffer_len = INF_LEN*2 + pre_conv_kernel + post_conv_kernel - 2
 
 camlist = pygame.camera.list_cameras()
 if camlist:
-	cam = pygame.camera.Camera(camlist[0],(640,480))
+	cam = pygame.camera.Camera(camlist[0],(480,480))
 
 cam.start()
 
