@@ -66,7 +66,7 @@ def multiple_img_infer(directory_path, img_ext = ".jpg"):
 	print(sorted_frame_details)
 	for i in range(3):
 		frames.append(directory_path + "/" + sorted_frame_details[i][0] + img_ext)	 	
-	return {"class": object_class, "frames":frames}
+	return {"class": final_class, "frames":frames}
 	
 
 def get_img_arr(img_path):
