@@ -26,13 +26,13 @@ session = None
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 
-#PATH_TO_CKPT = '/home/peps/Class-Files/mobilenet/frozen_inference_graph.pb'
-PATH_TO_CKPT = '<INSERT PATH TO TO THE PB FILE>'
+PATH_TO_CKPT = '/home/peps/Class-Files/mobilenet/frozen_inference_graph.pb'
+#PATH_TO_CKPT = '<INSERT PATH TO TO THE PB FILE>'
 
 # List of the strings that is used to add correct label for each box.
 
-#PATH_TO_LABELS = '/home/peps/Class-Files/mobilenet/label_map.pbtxt'
-PATH_TO_LABELS = '<INSERT PATH TO THE LABEL FILE>'
+PATH_TO_LABELS = '/home/peps/Class-Files/mobilenet/label_map.pbtxt'
+#PATH_TO_LABELS = '<INSERT PATH TO THE LABEL FILE>'
 
 # Number of classes to detect
 NUM_CLASSES = 3
@@ -100,5 +100,14 @@ def infer(image_np):
         feed_dict={image_tensor: image_np_expanded})
     end_time = time.time()
     print('time taken::run', end_time - start_time)
-    res = ([category_index.get(value) for index,value in enumerate(classes[0]) if scores[0,index] > 0.5])
-    return res[0]['name']
+    class_name = "None"
+    confidence = 0.0
+    for index, value in enumerate(classes[0]):
+        #print('index->', index, ' value->', value, 'scores->', scores[0, index])
+        if scores[0, index] > 0.5:
+            class_name = category_index.get(value)['name']
+            confidence = scores[0, index]
+            print("category::", category_index.get(value), "scores::", scores[0, index])
+    #res = ([category_index.get(value) for index,value in enumerate(classes[0]) if scores[0,index] > 0.5])
+    #print(res)
+    return {"class": class_name, "confidence": confidence}

@@ -4,7 +4,8 @@ from tensorflow_util import init_tensorflow, infer
 import urllib.request
 import os
 import cv2
-
+import glob
+import operator
 
 
 
@@ -44,9 +45,36 @@ def file_upload():
 		process(upload_path)
 		return redirect('/')
 
+def multiple_img_infer(directory_path, img_ext = ".jpg"):
+	files = glob.glob(directory_path + os.sep + "*" + img_ext)
+	class_details = {'specs':{}, 'card':{}, 'keys':{}}
+	class_count = {'specs':0, 'card':0, 'keys':0}
+	for file in files:
+		filename = file[file.rfind('/')+1:file.rfind('.')]
+		im = get_img_arr(file)
+		inference_result = infer(im)
+		print("detection:::", inference_result)
+		object_class = inference_result['class']
+		if object_class in class_count:
+			class_count[object_class]+=1
+			class_details[object_class][filename] = inference_result['confidence']
+	sorted_class_count = sorted(class_count.items(), key=operator.itemgetter(1), reverse=True)
+	final_class = sorted_class_count[0][0]
+	frames = []
+	class_frame_details = class_details[final_class]
+	sorted_frame_details = sorted(class_frame_details.items(), key=operator.itemgetter(1), reverse=True)
+	print(sorted_frame_details)
+	for i in range(3):
+		frames.append(directory_path + "/" + sorted_frame_details[i][0] + img_ext)	 	
+	return {"class": object_class, "frames":frames}
+	
+
+def get_img_arr(img_path):
+	return cv2.imread(img_path)
+
 # image processing function that calls the tensorflow oject detection api
 def process(img_path):
-	im = cv2.imread(img_path)
+	im = get_img_arr(img_path)
 	print(im.shape)
 	#infer function is the tensorflow object detection API function
 	object_class = infer(im)
@@ -56,6 +84,8 @@ def process(img_path):
 
 @app.route('/')
 def hello_world():
+	res = multiple_img_infer('/home/peps/Class-Files/simple-flask/uploads')
+	print(res)
 	return render_template('index.html')
 
 if __name__ == '__main__':
