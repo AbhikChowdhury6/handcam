@@ -22,13 +22,13 @@ led = LED(21)
 url = sys.argv[1]
 
 #epsilon for judging zero of an inflectionEPS = 3.0
-EPS = 2.0
+EPS = 0.8
 Fs = 10
 sr = 1.0 / Fs
 pre_conv_kernel = 3 
 post_conv_kernel = 2 
 # length of time for an inflection point sample
-INF_LEN = 2 
+INF_LEN = 3 
 #gravitational constant in phoenix
 G_PHX = 9.802
 
@@ -160,7 +160,7 @@ while True:
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
 			print("Inflection point at {}".format(time.time()))
-			send_picture(url)
+			#send_picture(url)
 #			time.sleep(1)
 #			if camera_tread:
 #				if camera_tread.isAlive():
@@ -176,7 +176,7 @@ while True:
 			gyr_buffer.flush()
 			grv_buffer.flush()
 	lastTime = time.time()
-	time.sleep(0.05 - ((time.time() - starttime) % 0.05))
+	time.sleep(sr - ((time.time() - starttime) % sr))
 
 
 
