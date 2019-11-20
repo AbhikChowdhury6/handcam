@@ -160,7 +160,6 @@ while True:
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
 			print("Inflection point at {}".format(time.time()))
-			#send_picture(url)
 #			time.sleep(1)
 #			if camera_tread:
 #				if camera_tread.isAlive():
@@ -172,6 +171,9 @@ while True:
 #				camera_tread = threading.Thread(send_picture, (url))
 #				camera_tread.start()
 			# if this introduces a lag, these can be invoked
+			time.sleep(2)
+			#send_picture(url)
+			time.sleep(2)
 			acc_buffer.flush()
 			gyr_buffer.flush()
 			grv_buffer.flush()
