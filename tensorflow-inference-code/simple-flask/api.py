@@ -1,6 +1,7 @@
 from flask import Flask, flash, request, redirect, render_template
 from flask_restful import Resource, Api
 from tensorflow_util import init_tensorflow, infer
+from firebase_util import init_firebase, uploadToFirebase
 import urllib.request
 import os
 import cv2
@@ -18,6 +19,8 @@ UPLOAD_FOLDER = 'uploads'
 def init():
 	print('tensorflow initialization...')
 	init_tensorflow()
+	print('firebase initialization')
+	init_firebase()
 
 init()
 
@@ -82,10 +85,16 @@ def process(img_path):
 	print("object class::", object_class)
 	return object_class 
 
+
+
+
 @app.route('/')
 def hello_world():
-	res = multiple_img_infer('/home/peps/Class-Files/simple-flask/uploads')
+	res = multiple_img_infer('/home/peps/Videos/Webcam/consoidated-test/keys3')
 	print(res)
+	frames = res["frames"]
+	class_name = res["class"]
+	uploadToFirebase(class_name, frames)
 	return render_template('index.html')
 
 if __name__ == '__main__':
