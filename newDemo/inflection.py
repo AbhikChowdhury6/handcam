@@ -21,6 +21,8 @@ led = LED(21)
 
 url = sys.argv[1]
 
+lastN = sys.argv[2]
+
 #epsilon for judging zero of an inflectionEPS = 3.0
 EPS = 0.8
 Fs = 10
@@ -37,23 +39,6 @@ buffer_len = INF_LEN*2 + pre_conv_kernel + post_conv_kernel - 2
 starttime=time.time()
 lastTime = time.time()
 	
-def send_picture(url):
-    led.on()
-    os.system("fswebcam -r 480x480 f1.jpg")
-    image_path = "f1.jpg"
-    b64_image = ""
-    # Encoding the JPG,PNG,etc. image to base64 format
-    time.sleep(1)
-    with open(image_path, "rb") as imageFile:
-        b64_image = base64.b64encode(imageFile.read())
-
-	# data to be sent to api
-    data = {'b64': b64_image}
-
-	# sending post request and saving response as response object
-    r = requests.post(url=url, data=data)
-    print(r)
-    led.off()
 
 
 class simple_buffer():
@@ -160,23 +145,14 @@ while True:
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
 			print("Inflection point at {}".format(time.time()))
-#			time.sleep(1)
-#			if camera_tread:
-#				if camera_tread.isAlive():
-#					camera_tread = threading.Thread(send_picture, (url))
-#					camera_tread.start()
-#				else:
-#					print("Camera busy")
-#			else:
-#				camera_tread = threading.Thread(send_picture, (url))
-#				camera_tread.start()
+			os.system("python3 sendLastn.py " + url + " " + lastN)
 			# if this introduces a lag, these can be invoked
-			time.sleep(2)
+#			time.sleep(2)
 			#send_picture(url)
-			time.sleep(2)
-			acc_buffer.flush()
-			gyr_buffer.flush()
-			grv_buffer.flush()
+#			time.sleep(2)
+#			acc_buffer.flush()
+#			gyr_buffer.flush()
+#			grv_buffer.flush()
 	lastTime = time.time()
 	time.sleep(sr - ((time.time() - starttime) % sr))
 
