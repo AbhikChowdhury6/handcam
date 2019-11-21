@@ -1,3 +1,5 @@
 newDemo/my_image_classifier
 newDemo/inference_graph
+newDemo/data/
+newDemo/serverData/
 demo/inference_graph/
