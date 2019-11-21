@@ -2,6 +2,7 @@ import requests
 import base64
 
 import numpy as np
+import cv2
 
 import os
 
@@ -34,7 +35,12 @@ INF_LEN = 3
 #gravitational constant in phoenix
 G_PHX = 9.802
 
-buffer_len = INF_LEN*2 + pre_conv_kernel + post_conv_kernel - 2
+imu_buffer_len = INF_LEN*2 + pre_conv_kernel + post_conv_kernel - 2
+
+frame_buffer_len = INF_LEN*2
+
+#report_points = [0,INF_LEN,INF_LEN*2-1]
+report_points = range(frame_buffer_len)
 
 starttime=time.time()
 lastTime = time.time()
@@ -61,6 +67,13 @@ class simple_buffer():
 	def flush(self):
 		self.list = []
 
+	def pull(self, idces)
+		outlist = []
+		for idx in idces:
+			assert idx >= 0 and idx < self.size
+			outlist.append(self.list[idx])
+		return outlist
+
 
 LAST_GOOD_GRAV = np.array([0,0,0,0])
 
@@ -83,7 +96,6 @@ def interp_grav(data):
 	#init_errs = np.where(grav_mag == 0)
 	
 	#data[outliers] = (data[outliers-1] + data[outliers+1]) / 2
-	
 
 	outliers_left = outliers - 1
 	outliers_right = outliers + 1
@@ -114,13 +126,30 @@ def find_inf_pt(accel, gyro, eps = 0.001):
 	neg_sl = np.sum(inf_pt[-INF_LEN:]) <= 1 and np.sum(inf_pt[-2*INF_LEN:-INF_LEN]) > INF_LEN-1
 	return pos_sl or neg_sl
 
+def send_frames(framelist):
+	data = {"count" : len(framelist)}
+	c = 0
+	for frame in framelist:
+		retval, ibuffer = cv2.imencode('.jpg', frame)
+		b64_image = base64.b64encode(ibuffer)
+		data[str(c)]=b64_image
+		c = c + 1
+	r = requests.post(url=url, data=data)
+
 acd = np.array([0,0,0])
 gyd = np.array([0,0,0])
 grd = np.array([0,0,0,0])
 
-acc_buffer = simple_buffer(buffer_len)
-gyr_buffer = simple_buffer(buffer_len)
-grv_buffer = simple_buffer(buffer_len)
+#init buffers
+acc_buffer = simple_buffer(imu_buffer_len)
+gyr_buffer = simple_buffer(imu_buffer_len)
+grv_buffer = simple_buffer(imu_buffer_len)
+frame_buffer = simple_buffer(frame_buffer_len)
+
+#init camera
+cam = cv2.VideoCapture(0)
+cam.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 camera_tread = False
 
@@ -135,6 +164,8 @@ while True:
 	acc_buffer.update(acd)
 	gyr_buffer.update(gyd)
 	#grv_buffer.update(grd)
+    ret, frame = cam.read()
+	frame_buffer.update(frame)
 
 	if acc_buffer.ready() and gyr_buffer.ready():
 		# smooth gravity
@@ -145,7 +176,8 @@ while True:
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
 			print("Inflection point at {}".format(time.time()))
-			os.system("python3 sendLastn.py " + url + " " + lastN)
+			send_frames(frame_buffer.pull(report_points))
+			#os.system("python3 sendLastn.py " + url + " " + lastN)
 			# if this introduces a lag, these can be invoked
 #			time.sleep(2)
 			#send_picture(url)
