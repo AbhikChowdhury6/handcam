@@ -27,7 +27,7 @@ lastN = sys.argv[2]
 
 #epsilon for judging zero of an inflectionEPS = 3.0
 EPS = 2.2
-Fs = 10
+Fs = 20
 sr = 1.0 / Fs
 pre_conv_kernel = 3 
 post_conv_kernel = 2 
@@ -79,13 +79,26 @@ def get_data(sensor, prev, mask = 100):
 
 	return acd, gyd
 
+def get_data_fast(sensor, prev, mask = 100):
+	acd = np.array(sensor.acceleration)
+	gyd = np.array(sensor.gyro)
+	grd = np.array(sensor.gravity)
+	#print(str(acd) + "\t" + str(gyd))
+	if(acd[0] == None):
+		acd = mask+1 
+	# get prev grav
+	if grd.isnan() or np.abs(np.sqrt(np.sum(np.pow(grd,2)))-G_PHX) > 0.1:
+		grd = np.array([0,0,0])
+	acd = acd * (acd <= mask) + prev[0] * (acd > mask)
+	gyd = gyd * (gyd <= mask) + prev[1] * (gyd > mask)
+	return acd, gyd, grv
+
 def interp_grav(data):
 	grav_mag = np.sqrt(np.sum(data*data,axis=1))
 	outliers = np.where(np.abs(grav_mag - G_PHX) > 0.01) [0]
 	#init_errs = np.where(grav_mag == 0)
 	
 	#data[outliers] = (data[outliers-1] + data[outliers+1]) / 2
-	
 
 	outliers_left = outliers - 1
 	outliers_right = outliers + 1
@@ -118,7 +131,7 @@ def find_inf_pt(accel, gyro, eps = 0.001):
 
 acd = np.array([0,0,0])
 gyd = np.array([0,0,0])
-grd = np.array([0,0,0,0])
+grd = np.array([0,0,0])
 
 acc_buffer = simple_buffer(buffer_len)
 gyr_buffer = simple_buffer(buffer_len)
@@ -132,19 +145,19 @@ while True:
 	#take picture
 
 	# collect the data
-	acd, gyd = get_data(IMU, (acd,gyd,grd))	
+	acd, gyd, grd = get_data_fast(IMU, (acd,gyd,grd))	
 	# buffer
 	acc_buffer.update(acd)
 	gyr_buffer.update(gyd)
-	#grv_buffer.update(grd)
+	grv_buffer.update(grd)
 
 	if acc_buffer.ready() and gyr_buffer.ready():
 		# smooth gravity
-		#grvV = interp_grav(grv_buffer.report())
 		gyrLP = lowpass(gyr_buffer.report(), pre_conv_kernel)
 		accLP = lowpass(acc_buffer.report(), pre_conv_kernel)
-		#print(accLP)
-		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
+		grvLP = lowpass(interp_grav(grv_buffer.report()), pre_conv_kernel)
+		print("{},{},{}".format(accLP, grvLP))
+		inflection = find_inf_pt(accLP - grvLP, gyrLP, eps=EPS)
 		if inflection and time.time()-prev_inf > 0.5:
 			prev_inf = time.time()
 			print("Inflection point at {}".format(time.time()))
