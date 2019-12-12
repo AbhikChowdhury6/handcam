@@ -2,7 +2,7 @@ import requests
 import os
 import sys
 import base64
-
+import time
 
 
 sessions = os.listdir("data/")
@@ -14,6 +14,10 @@ sessionImgs = os.listdir("data/" + max(sessions))
 url = sys.argv[1]
 
 lastn = int(sys.argv[2])
+
+sleep = float(sys.argv[3])
+
+time.sleep(sleep)
 
 lastFew = sessionImgs[-1*lastn:]
 print(lastFew)

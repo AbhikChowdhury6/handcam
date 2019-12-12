@@ -5,6 +5,8 @@ import numpy as np
 
 import os
 
+import subprocess
+
 import time
 import sys
 import threading
@@ -24,7 +26,7 @@ url = sys.argv[1]
 lastN = sys.argv[2]
 
 #epsilon for judging zero of an inflectionEPS = 3.0
-EPS = 0.8
+EPS = 2.2
 Fs = 10
 sr = 1.0 / Fs
 pre_conv_kernel = 3 
@@ -123,7 +125,7 @@ gyr_buffer = simple_buffer(buffer_len)
 grv_buffer = simple_buffer(buffer_len)
 
 camera_tread = False
-
+prev_inf = time.time()
 while True:
 	#read IMU
 	#signal processing
@@ -143,9 +145,10 @@ while True:
 		accLP = lowpass(acc_buffer.report(), pre_conv_kernel)
 		#print(accLP)
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
-		if inflection:
+		if inflection and time.time()-prev_inf > 0.5:
+			prev_inf = time.time()
 			print("Inflection point at {}".format(time.time()))
-			os.system("python3 sendLastn.py " + url + " " + lastN)
+			subprocess.call(["python3","sendLastn.py",url,str(lastN),str(0.7)])
 			# if this introduces a lag, these can be invoked
 #			time.sleep(2)
 			#send_picture(url)
