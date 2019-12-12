@@ -150,13 +150,14 @@ while True:
 	acc_buffer.update(acd)
 	gyr_buffer.update(gyd)
 	grv_buffer.update(grd)
+	print("{}".format(np.sqrt(np.sum(grd*grd))))
 
 	if acc_buffer.ready() and gyr_buffer.ready():
 		# smooth gravity
 		gyrLP = lowpass(gyr_buffer.report(), pre_conv_kernel)
 		accLP = lowpass(acc_buffer.report(), pre_conv_kernel)
 		grvLP = lowpass(interp_grav(grv_buffer.report()), pre_conv_kernel)
-		print("{},{}".format(accLP, grvLP))
+		#print("{},{}".format(accLP, grvLP))
 		inflection = find_inf_pt(accLP - grvLP, gyrLP, eps=EPS)
 		if inflection and time.time()-prev_inf > 0.5:
 			prev_inf = time.time()
