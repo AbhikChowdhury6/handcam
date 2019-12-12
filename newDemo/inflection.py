@@ -87,11 +87,11 @@ def get_data_fast(sensor, prev, mask = 100):
 	if(acd[0] == None):
 		acd = mask+1 
 	# get prev grav
-	if grd.isnan() or np.abs(np.sqrt(np.sum(np.pow(grd,2)))-G_PHX) > 0.1:
+	if None in grd or np.abs(np.sqrt(np.sum(grd*grd))-G_PHX) > 0.1:
 		grd = np.array([0,0,0])
 	acd = acd * (acd <= mask) + prev[0] * (acd > mask)
 	gyd = gyd * (gyd <= mask) + prev[1] * (gyd > mask)
-	return acd, gyd, grv
+	return acd, gyd, grd
 
 def interp_grav(data):
 	grav_mag = np.sqrt(np.sum(data*data,axis=1))
@@ -156,7 +156,7 @@ while True:
 		gyrLP = lowpass(gyr_buffer.report(), pre_conv_kernel)
 		accLP = lowpass(acc_buffer.report(), pre_conv_kernel)
 		grvLP = lowpass(interp_grav(grv_buffer.report()), pre_conv_kernel)
-		print("{},{},{}".format(accLP, grvLP))
+		print("{},{}".format(accLP, grvLP))
 		inflection = find_inf_pt(accLP - grvLP, gyrLP, eps=EPS)
 		if inflection and time.time()-prev_inf > 0.5:
 			prev_inf = time.time()
