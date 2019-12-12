@@ -83,7 +83,8 @@ def get_data_fast(sensor, prev, mask = 100):
 	acd = np.array(sensor.acceleration)
 	gyd = np.array(sensor.gyro)
 	grd = np.array(sensor.gravity)
-	#print(str(acd) + "\t" + str(gyd))
+	#grd = prev[2]
+        #print(str(acd) + "\t" + str(gyd))
 	if(acd[0] == None):
 		acd = mask+1 
 	# get prev grav
@@ -150,7 +151,6 @@ while True:
 	acc_buffer.update(acd)
 	gyr_buffer.update(gyd)
 	grv_buffer.update(grd)
-	print("{}".format(np.sqrt(np.sum(grd*grd))))
 
 	if acc_buffer.ready() and gyr_buffer.ready():
 		# smooth gravity
@@ -162,7 +162,7 @@ while True:
 		if inflection and time.time()-prev_inf > 0.5:
 			prev_inf = time.time()
 			print("Inflection point at {}".format(time.time()))
-			subprocess.call(["python3","sendLastn.py",url,str(lastN),str(0.7)])
+			#subprocess.call(["python3","sendLastn.py",url,str(lastN),str(0.7)])
 			# if this introduces a lag, these can be invoked
 #			time.sleep(2)
 			#send_picture(url)
@@ -171,7 +171,9 @@ while True:
 #			gyr_buffer.flush()
 #			grv_buffer.flush()
 	lastTime = time.time()
-	time.sleep(sr - ((time.time() - starttime) % sr))
+	leftover_time = sr - ((time.time() - starttime) % sr)
+	print("{},{}".format(int(100*np.sqrt(np.sum(grd*grd)))/100,int(1000*leftover_time)))
+	time.sleep(leftover_time)
 
 
 
