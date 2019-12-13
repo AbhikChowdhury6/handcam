@@ -151,7 +151,7 @@ while True:
 	acc_buffer.update(acd)
 	gyr_buffer.update(gyd)
 	grv_buffer.update(grd)
-
+	grv_debug = 0.0
 	if acc_buffer.ready() and gyr_buffer.ready():
 		# smooth gravity
 		gyrLP = lowpass(gyr_buffer.report(), pre_conv_kernel)
@@ -170,9 +170,10 @@ while True:
 #			acc_buffer.flush()
 #			gyr_buffer.flush()
 #			grv_buffer.flush()
+		grv_debug = int(100*np.sqrt(np.sum(grvLP[-1,:]*grvLP[-1,:])))/100
 	lastTime = time.time()
 	leftover_time = sr - ((time.time() - starttime) % sr)
-	print("{},{},{}".format(int(100*np.sqrt(np.sum(grd*grd)))/100,int(1000*leftover_time),int(100*np.sqrt(np.sum(grvLP[-1,:]*grvLP[-1,:])))/100))
+	print("{},{},{}".format(int(100*np.sqrt(np.sum(grd*grd)))/100,int(1000*leftover_time),grv_debug))
 	time.sleep(leftover_time)
 
 
