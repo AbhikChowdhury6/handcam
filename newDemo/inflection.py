@@ -162,7 +162,8 @@ while True:
 		if inflection and time.time()-prev_inf > 0.5:
 			prev_inf = time.time()
 			print("Inflection point at {}".format(time.time()))
-			#subprocess.call(["python3","sendLastn.py",url,str(lastN),str(0.7)])
+			subprocess.call(["python3","sendLastn.py",url,str(lastN),str(0.7)])
+			print("Subprocess call complete")
 			# if this introduces a lag, these can be invoked
 #			time.sleep(2)
 			#send_picture(url)
@@ -173,7 +174,7 @@ while True:
 		grv_debug = int(100*np.sqrt(np.sum(grvLP[-1,:]*grvLP[-1,:])))/100
 	lastTime = time.time()
 	leftover_time = sr - ((time.time() - starttime) % sr)
-	print("{},{},{}".format(int(100*np.sqrt(np.sum(grd*grd)))/100,int(1000*leftover_time),grv_debug))
+	#print("{},{},{}".format(int(100*np.sqrt(np.sum(grd*grd)))/100,int(1000*leftover_time),grv_debug))
 	time.sleep(leftover_time)
 
 
