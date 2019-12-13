@@ -89,7 +89,7 @@ def get_data_fast(sensor, prev, mask = 100):
 		acd = mask+1 
 	# get prev grav
 	if None in grd or np.abs(np.sqrt(np.sum(grd*grd))-G_PHX) > 0.1:
-		grd = np.array([0,0,0])
+		grd = prev[2]
 	acd = acd * (acd <= mask) + prev[0] * (acd > mask)
 	gyd = gyd * (gyd <= mask) + prev[1] * (gyd > mask)
 	return acd, gyd, grd
