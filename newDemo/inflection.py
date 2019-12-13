@@ -172,7 +172,7 @@ while True:
 #			grv_buffer.flush()
 	lastTime = time.time()
 	leftover_time = sr - ((time.time() - starttime) % sr)
-	print("{},{}".format(int(100*np.sqrt(np.sum(grd*grd)))/100,int(1000*leftover_time)))
+	print("{},{},{}".format(int(100*np.sqrt(np.sum(grd*grd)))/100,int(1000*leftover_time),int(100*np.sqrt(np.sum(grvLP[-1,:]*grvLP[-1,:])))/100))
 	time.sleep(leftover_time)
 
 
