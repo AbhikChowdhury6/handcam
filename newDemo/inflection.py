@@ -29,8 +29,8 @@ lastN = sys.argv[2]
 EPS = 2.2
 Fs = 20
 sr = 1.0 / Fs
-pre_conv_kernel = 3 
-post_conv_kernel = 2 
+pre_conv_kernel = 6 
+post_conv_kernel = 4 
 # length of time for an inflection point sample
 INF_LEN = 3 
 #gravitational constant in phoenix
