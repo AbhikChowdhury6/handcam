@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+	Transitive by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+  <head>
+    <title>Ask your hands</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+  <body>
+    <video width="400" controls>
+      <source src="/Users/vipanchichacham/Desktop/vid1.mp4" type="video/mp4" />
+      Your browser does not support HTML5 video.
+    </video>
+
+    <!-- <form action="" method='post' enctype="multipart/form-data">
+      <input type="file" name="file"/><br><br>
+        <input type="submit" value="Upload"/>
+      </form>
+      </form> -->
+    <!-- <script>
+      <?php:
+
+$name= $_FILES['file']['name'];
+
+$tmp_name= $_FILES['file']['tmp_name'];
+
+$position= strpos($name, ".");
+
+$fileextension= substr($name, $position + 1);
+
+$fileextension= strtolower($fileextension);
+
+
+if (isset($name)) {
+
+$path= 'Uploads/videos/';
+if (empty($name))
+{
+echo("Please choose a file");
+}
+else if (!empty($name)){
+if (($fileextension !== "mp4") && ($fileextension !== "ogg") && ($fileextension !== "webm"))
+{
+echo("The file extension must be .mp4, .ogg, or .webm in order to be uploaded");
+}
+
+
+else if (($fileextension == "mp4") || ($fileextension == "ogg") || ($fileextension == "webm"))
+{
+if (move_uploaded_file($tmp_name, $path.$name)) {
+echo('Uploaded!');
+}
+}
+}
+}
+?>
+</script>
+<script>
+  <?php
+
+  if (($fileextension == "mp4") || ($fileextension == "ogg") || ($fileextension == "webm"))
+  {
+  echo("<video width='320' controls> <source src='$path/$name' type='video/$fileextension'> Your browser does not support the video tag. </video>");
+  }
+
+  ?>
+  ?>
+</script> -->
+  </body>
+</html>
