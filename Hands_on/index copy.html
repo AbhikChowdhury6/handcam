@@ -11,6 +11,7 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+
     <style>
       body {
         margin: 0;
@@ -72,6 +73,11 @@
 
       /* TIMELINE
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
       .timeline {
         white-space: nowrap;
@@ -411,7 +417,7 @@
       <div class="row">
         <div class="col-md-4 nopad">
           <label class="image-checkbox">
-          <img src="images/vid1.png" class="img-fluid" />
+          <img src="images/vid2.png" class="img-fluid" />
           <img
             src="images/play-icon2.png"
             class="play-btn"
@@ -429,7 +435,7 @@
             src="images/play-icon2.png"
             class="play-btn"
             data-toggle="modal"
-            data-target="#play-video-2"
+            data-target="#play-video-1"
           />
           <input type="checkbox" name="image[]" value="" />
 
@@ -439,12 +445,12 @@
 
        <div class="col-md-4 nopad">
           <label class="image-checkbox">
-          <img src="images/vid3.png" class="img-fluid" />
+          <img src="images/vid2.png" class="img-fluid" />
           <img
             src="images/play-icon2.png"
             class="play-btn"
             data-toggle="modal"
-            data-target="#play-video-3"
+            data-target="#play-video-1"
           />
           <input type="checkbox" name="image[]" value="" />
 
@@ -457,12 +463,14 @@
       <br /><br />
     </div>
 
+
+    
     <div class="modal fade" id="play-video-1">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-          <button onclick="myFunction1()" type="button">Note time</button>
+          <button onclick="myFunction()" type="button">Get </button>
           <div class="modal-body">
-            <video id="myVideo1" width="100%" controls>
+            <video id="myVideo" width="100%" controls >
               <source src="images/vid1.mp4" type="video/mp4" />
             </video>
           </div>
@@ -473,9 +481,8 @@
     <div class="modal fade" id="play-video-2">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-          <button onclick="myFunction2()" type="button">Note time</button>
           <div class="modal-body">
-            <video id="myVideo2" width="100%" controls>
+            <video width="100%" controls autoplay loop>
               <source src="images/vid2.mp4" type="video/mp4" />
             </video>
           </div>
@@ -486,9 +493,8 @@
     <div class="modal fade" id="play-video-3">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-          <button onclick="myFunction3()" type="button">Note time</button>
           <div class="modal-body">
-            <video id="myVideo3" width="100%" controls>
+            <video width="100%" controls autoplay loop>
               <source src="images/vid3.mp4" type="video/mp4" />
             </video>
           </div>
@@ -618,6 +624,74 @@ function setKeyboardFn(prev, next) {
 })();
 
     </script>
+
+    <script>
+//       var video = document.getElementsByTagName('video')[0],
+//     play = document.getElementsByClassName('video__play')[0],
+//     timeline = document.getElementsByClassName('timeline')[0],
+//     timelineProgress = document.getElementsByClassName('timeline__progress')[0],
+//     drag = document.getElementsByClassName('timeline__drag')[0];
+
+// // Toggle Play / Pause
+// play.addEventListener('click', togglePlay, false);
+
+// function togglePlay() {
+//   if (video.paused) {
+//     video.play();
+//   } else {
+//     video.pause();
+//   }
+// }
+
+// // on interaction with video controls
+// video.onplay = function() {
+//   TweenMax.ticker.addEventListener('tick', vidUpdate);
+// };
+// video.onpause = function() {
+// 	TweenMax.ticker.removeEventListener('tick', vidUpdate);
+// };
+// video.onended = function() {
+// 	TweenMax.ticker.removeEventListener('tick', vidUpdate);
+// };
+
+// // Sync the timeline with the video duration
+// function vidUpdate() {
+//   TweenMax.set(timelineProgress, {
+//     scaleX: (video.currentTime / video.duration).toFixed(5)
+//   });
+//   TweenMax.set(drag, {
+//     x: (video.currentTime / video.duration * timeline.offsetWidth).toFixed(4)
+//   });
+// }
+
+// // Make the timeline draggable
+// Draggable.create(drag, {
+//   type: 'x',
+//   trigger: timeline,
+//   bounds: timeline,
+//   onPress: function(e) {
+//     video.currentTime = this.x / this.maxX * video.duration;
+//     TweenMax.set(this.target, {
+//       x: this.pointerX - timeline.getBoundingClientRect().left
+//     });
+//     this.update();
+//     var progress = this.x / timeline.offsetWidth;
+//     TweenMax.set(timelineProgress, {
+//       scaleX: progress
+//     });
+//   },
+//   onDrag: function() {
+//     video.currentTime = this.x / this.maxX * video.duration;
+//     var progress = this.x / timeline.offsetWidth;
+//     TweenMax.set(timelineProgress, {
+//       scaleX: progress
+//     });
+//   },
+//   onRelease: function(e) {
+//     e.preventDefault();
+//   }
+// });
+//     </script>
     <script>
 
 // image gallery
@@ -641,25 +715,14 @@ $(".image-checkbox").on("click", function (e) {
 });
 
     </script>
+    <script>
+      var duration=0;
+      var vid = document.getElementById("myVideo");
 
-<script>
-  var duration1=0;
-  var duration2=0
-  var duration3=0;
-  var vid1 = document.getElementById("myVideo1");
-  var vid2 = document.getElementById("myVideo2");
-  var vid3 = document.getElementById("myVideo3");
-function myFunction1() { 
-duration1 = duration1 +" , "+vid1.currentTime;
-alert(" Point1: "  + duration1);
+function myFunction() { 
+  duration = duration +" , "+vid.currentTime;
+
+  alert(" Point: "  + duration);
 } 
-function myFunction2() { 
-duration2 = duration2 +" , "+vid2.currentTime;
-alert(" Point2: "  + duration2);
-} 
-function myFunction3() { 
-duration3 = duration3 +" , "+vid3.currentTime;
-alert(" Point3: "  + duration3);
-} 
-</script>
+    </script>
 </html>
