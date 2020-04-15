@@ -113,8 +113,8 @@ statBrightness = 255
 
 
 
-@daemonizer.run(pidfile="/tmp/vidRec.pid")
-def vidRec(cam, fn):
+#@daemonizer.run(pidfile="/tmp/vidRec.pid")
+def vidRec(cam):
     starttime = time.time()
     while True:
         #capture frame and save it to the data folder
@@ -123,7 +123,7 @@ def vidRec(cam, fn):
         if(time.time()-starttime > 15):
             break
 
-@daemonizer.run(pidfile="/tmp/sleepy.pid")
+#@daemonizer.run(pidfile="/tmp/sleepy.pid")
 def imuRec(imu):
     starttime = time.time()
     while True:
@@ -193,17 +193,8 @@ while(True):
         
 
     if(recording):
-        #check how much local memory there is
-        #if there's < 5 minutes of memory
-            #flash purple three times
-            for _ in range(3):
-                pixels[0] = (statBrightness,0,statBrightness)
-                time.sleep(.5)
-                pixels[0] = (0,0,0)
-            canIRecord=False
-        #else
-            if(canIRecord and not amIRecording):
-                amIRecording=True
+        if(not amIRecording):
+            amIRecording=True
         #set color red
         LEDoutput = (statBrightness,0,0)
         flashing=True
@@ -216,21 +207,8 @@ while(True):
         flashing=True
 
 
-    # if(wifiDebug):
-    #     if(wifiOff):
-    #         #turn on wifi
-    #     #test wifi connecttion
-    #     #set color white
-    #     LEDoutput = (statBrightness,statBrightness,statBrightness)
-    #     flashing=True
-    #     if(wifiConnected):
-    #         #set color white, show, and exit the program
-    #         pixels[0] = (statBrightness,statBrightness,statBrightness)
-    #         #exit
-
-    
     #Check if button is being pushed
-    if(GPIO.input(INPUT_PIN)): #and not wifiConnected
+    if(GPIO.input(INPUT_PIN)):
         execute=False
         buttonPushedCount = buttonPushedCount + 1 
 
@@ -238,46 +216,42 @@ while(True):
         execute=True
         buttonPushedCount = 0
 
+    if(amIRecording):
+        os.makedirs("/home/pi/data/")
+        vidRec(cv)
+        imuRec(imu)
 
 
-    #check if USB is connected 
-    os.system("ls /media/pi/")
-    if(res=="USBDrive" and standby and execute):
-        #set color to blue
-        LEDoutput = (0,0,statBrightness)
-        #check to see if you have any files to transfer
-        os.system("ls /home/pi/data")
-            if(res!=""):
-                #zip up files
-                    #first all of the data folders and encrypt them and name it the timestamp
-                    #zip up the whole session and name it the timestamp
-                tot = 0
-                fl = os.system("ls -l /home/pi/data/")
-                for f in fl:
-                    tot += int(f)
-                #check if you have files to transfer and if there is space on the USB for all of your files
+    # #check if USB is connected 
+    # os.system("ls /media/pi/")
+    # if(res=="USBDrive" and standby and execute):
+    #     #set color to blue
+    #     LEDoutput = (0,0,statBrightness)
+    #     #check to see if you have any files to transfer
+    #     os.system("ls /home/pi/data")
+    #         if(res!=""):
+    #             #zip up files
+    #                 #first all of the data folders and encrypt them and name it the timestamp
+    #                 #zip up the whole session and name it the timestamp
+    #             tot = 0
+    #             fl = os.system("ls -l /home/pi/data/")
+    #             for f in fl:
+    #                 tot += int(f)
+    #             #check if you have files to transfer and if there is space on the USB for all of your files
                 
-                    #initiate async transfer
-                    transfering=True
-                    flashing=True
-                #else
-                    #set to teal
-                    LEDoutput = (0,statBrightness,statBrightness)
-                    flashing = False
-        #else:
-            transfering=False
+    #                 #initiate async transfer
+    #                 transfering=True
+    #                 flashing=True
+    #             #else
+    #                 #set to teal
+    #                 LEDoutput = (0,statBrightness,statBrightness)
+    #                 flashing = False
+    #     #else:
+    #         transfering=False
 
     
 
-    if(amIRecording):
-        if(time.time() - recStartTime > 15):
-            fn = str(time.time())
-            os.makedirs("/home/pi/" + fn)
-            os.makedirs("/home/pi/" + fn + "/data/")
-
-            vidRec(cv, fn)
-            imuRec(imu, fn)
-            recStartTime = time.time()
+    
 
     
     if(flashing):
