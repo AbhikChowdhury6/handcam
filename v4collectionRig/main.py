@@ -16,31 +16,32 @@
 
 
 #boot TODO's
-    #disable HDMI
-        #/usr/bin/tvservice -o
-    #disable activity LED
-        #add to /boot/config.txt
-            ## Disable the ACT LED on the Pi Zero.
-            #dtparam=act_led_trigger=none
-            #dtparam=act_led_activelow=on
-    #disable Wifi
+                                                                                            #disable HDMI
+                                                                                                #/usr/bin/tvservice -o
+                                                                                            #disable activity LED
+                                                                                                #add to /boot/config.txt
+                                                                                                    ## Disable the ACT LED on the Pi Zero.
+                                                                                                    #dtparam=act_led_trigger=none
+                                                                                                    #dtparam=act_led_activelow=on
+                                                                                            #disable Wifi
     #start this program
 
-#recording TODO's
-    #check available space on device
-        #use subprocess with a grep and conditionals
+                                                                                #recording TODO's
+                                                                                    #check available space on device
+                                                                                        #use subprocess with a grep and conditionals
 
-#Wifi debug TODO's
-    #turn wifi on
-    #check if wifi is connected
-        #will need to edit files and reboot for it to work
+                                                                                            #Wifi debug TODO's
+                                                                                                #turn wifi on
+                                                                                                #check if wifi is connected
+                                                                                                    #will need to edit files and reboot for it to work
 
 #USB transfer TODO;s
     #check if USB drive is connected
         #use sub proceeses for all of these
-    #retrieve size of files to transfer
-    #retrive available space on USB
-    #encrypt relevant files
+                                                                                    # retrieve size of files to transfer
+                                                                                    # retrive available space on USB
+                                                                                    # encrypt relevant files
+    #zip files
     #transfer 
 
 #async TODO's
@@ -56,7 +57,11 @@ import neopixel
 import os
 import csv
 import RTIMU
-
+import RPi.GPIO as GPIO   
+ 
+GPIO.setmode(GPIO.BCM)           # Set's GPIO pins to BCM GPIO numbering
+INPUT_PIN = 4          
+GPIO.setup(INPUT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 pixels = neopixel.NeoPixel(board.D18, 2)
 
@@ -111,23 +116,19 @@ statBrightness = 255
 @daemonizer.run(pidfile="/tmp/vidRec.pid")
 def vidRec(cam, fn):
     starttime = time.time()
-    #cature first frame and save it to Session and data
-    ret, frame = cam.read()
-    cv2.imwrite("/home/pi/data/" + fn + "/thumbnail.jpg", frame)
-    cv2.imwrite("/home/pi/data/" + fn + "/data/" + str(time.time()) + ".jpg", frame)
     while True:
         #capture frame and save it to the data folder
         ret, frame = cam.read()
-        cv2.imwrite(fn + "/" + str(time.time()) + ".jpg", frame)
+        cv2.imwrite("/home/pi/data/" + str(time.time()) + ".jpg", frame)
         if(time.time()-starttime > 15):
             break
 
 @daemonizer.run(pidfile="/tmp/sleepy.pid")
-def imuRec(imu, fn):
+def imuRec(imu):
     starttime = time.time()
     while True:
         #append datapoint to csv
-        f=open("/home/pi/data/" + fn + "/data/IMU.csv",mode='a')
+        f=open("/home/pi/data/IMU.csv",mode='a')
         w=csv.writer(f,delimiter=',')
 
         startTime=time.time()
@@ -163,6 +164,7 @@ def imuRec(imu, fn):
 
 #fixed time loop @ 10HZ
 while(True):
+    
     #set color green
     LEDoutput = (0,statBrightness,0)
     flashing=True
@@ -214,21 +216,21 @@ while(True):
         flashing=True
 
 
-    if(wifiDebug):
-        if(wifiOff):
-            #turn on wifi
-        #test wifi connecttion
-        #set color white
-        LEDoutput = (statBrightness,statBrightness,statBrightness)
-        flashing=True
-        if(wifiConnected):
-            #set color white, show, and exit the program
-            pixels[0] = (statBrightness,statBrightness,statBrightness)
-            #exit
+    # if(wifiDebug):
+    #     if(wifiOff):
+    #         #turn on wifi
+    #     #test wifi connecttion
+    #     #set color white
+    #     LEDoutput = (statBrightness,statBrightness,statBrightness)
+    #     flashing=True
+    #     if(wifiConnected):
+    #         #set color white, show, and exit the program
+    #         pixels[0] = (statBrightness,statBrightness,statBrightness)
+    #         #exit
 
     
     #Check if button is being pushed
-    if(button and not wifiConnected):
+    if(GPIO.input(INPUT_PIN)): #and not wifiConnected
         execute=False
         buttonPushedCount = buttonPushedCount + 1 
 
