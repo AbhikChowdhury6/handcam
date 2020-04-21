@@ -1,14 +1,34 @@
-
-
 #install
-sudo apt install libatlas3-base libsz2 libharfbuzz0b libtiff5 libjasper1 libilmbase12 libopenexr22 libilmbase12 libgstreamer1.0-0 libavcodec57 libavformat57 libavutil55 libswscale4 libqtgui4 libqt4-test libqtcore4
-sudo pip3 install opencv-contrib-python libwebp6
+sudo apt-get update
+sudo apt-get upgrade -y
 
+sudo apt-get install -y zip python3-pip i2c-tools python3-dev
+
+
+sudo pip3 install rpi_ws281x adafruit-circuitpython-neopixel
+
+
+
+sudo apt install -y libhdf5-103
+
+sudo apt-get install -y libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
+sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install -y libxvidcore-dev libx264-dev
+sudo apt-get install -y libgtk2.0-dev libgtk-3-dev
+
+sudo apt-get install -y libilmbase-dev
+sudo apt-get install -y libopenexr-dev
+sudo apt-get install -y libgstreamer1.0-dev
+
+sudo apt-get install -y libqtgui4
+
+sudo pip3 install opencv-contrib-python==3.4.3.18
+
+
+sudo apt-get install -y cmake
+sudo apt-get install -y qt4-default
 git clone https://github.com/RPi-Distro/RTIMULib/ RTIMU
 cd RTIMU/Linux/python
-sudo apt install python3-dev
-python setup.py build
-python setup.py install
-sudo apt install libopenjp2-7
-
-sudo apt-get install zip
+python3 setup.py build
+python3 setup.py install
+cd ~
