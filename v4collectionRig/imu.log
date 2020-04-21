@@ -1,0 +1,87 @@
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21556.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 52, in run
+    timeStamp=round((time.time()-startTime),3)
+NameError: name 'startTime' is not defined
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21591.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 52, in run
+    timeStamp=round((time.time()-startTime),3)
+NameError: name 'startTime' is not defined
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21628.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 52, in run
+    timeStamp=round((time.time()-startTime),3)
+NameError: name 'startTime' is not defined
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21665.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 53, in run
+    timeStamp=round((time.time()-startTime),3)
+NameError: name 'startTime' is not defined
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21731.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21851.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22055.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:The process is already running with pid 22055.
+ERROR:daemons.startstop.simple:The process is already running with pid 22055.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22234.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22248.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22260.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22359.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22371.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22850.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26659.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26671.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26815.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26879.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26909.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26957.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26969.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26985.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
