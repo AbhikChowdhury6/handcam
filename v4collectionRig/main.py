@@ -59,6 +59,10 @@ GPIO.setmode(GPIO.BCM)           # Set's GPIO pins to BCM GPIO numbering
 INPUT_PIN = 4          
 GPIO.setup(INPUT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
+#set up the other side of the button
+GPIO.setup(21, GPIO.OUT)
+GPIO.output(21, GPIO.HIGH)
+
 pixels = neopixel.NeoPixel(board.D18, 2)
 
 
