@@ -80,6 +80,21 @@ buttonPushedCount = 0
 transfered = False
 
 
+pixels[0] = ( 255,0,0)
+pixels[1] = ( 0,0,255)
+time.sleep(2)
+pixels[0] = ( 0,0,0)
+pixels[1] = ( 0,0,0)
+time.sleep(2)
+pixels[0] = ( 255,0,0)
+pixels[1] = ( 0,0,255)
+time.sleep(2)
+pixels[0] = ( 0,0,0)
+pixels[1] = ( 0,0,0)
+
+
+
+
 print("about to enter loop")
 #fixed time loop @ 10HZ
 while(True):
@@ -152,7 +167,7 @@ while(True):
 
     if(loopCount%10<5):
         LEDoutput = (0,0,0)
-    
+#        print("FLASH")
 
     pixels[0] = LEDoutput
 
