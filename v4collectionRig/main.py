@@ -116,6 +116,7 @@ while(True):
         if(buttonPushedCount == 10):
             green = statBrightness
             pixels[1] = (recLightBrightness, recLightBrightness, recLightBrightness)
+            print("turning on light")
     else:
         buttonPushedCount = 0
 

@@ -1,7 +1,7 @@
 import sys
 
 ''' PATH TO THE TENSORFLOW INSTALLATION SHOULD BE IN THE PYTHON PATH. See official Tensorflow object detection installation instructions'''
-sys.path.append('/home/peps/Class Files/models/research')
+sys.path.append('/home/chowderdl/Documents/handcam/newDemo/scripts')
 
 import numpy as np
 import os

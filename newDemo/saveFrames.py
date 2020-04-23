@@ -26,7 +26,7 @@ while True:
     starttime = time.time()
     ret, frame = cam.read()
 #    print(ret)
-    time.sleep(0.4 - ((time.time() - starttime) % 0.4))
+    time.sleep(0.2 - ((time.time() - starttime) % 0.2))
     print(time.time() - starttime)
     cv2.imwrite(path + "/" + str(time.time()) + ".jpg", frame)
 
