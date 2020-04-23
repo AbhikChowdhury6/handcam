@@ -182,9 +182,9 @@ while True:
 #			time.sleep(2)
 			#send_picture(url)
 #			time.sleep(2)
-#			acc_buffer.flush()
-#			gyr_buffer.flush()
-#			grv_buffer.flush()
+			acc_buffer.flush()
+			gyr_buffer.flush()
+			grv_buffer.flush()
 	lastTime = time.time()
 	time.sleep(sr - ((time.time() - starttime) % sr))
 

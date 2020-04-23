@@ -21,6 +21,11 @@ sudo apt-get install -y libopenexr-dev
 sudo apt-get install -y libgstreamer1.0-dev
 
 sudo apt-get install -y libqtgui4
+sudo apt install -y libqt4-test
+
+sudo apt-get install -y libatlas-base-dev
+
+
 
 sudo pip3 install opencv-contrib-python==3.4.3.18
 
@@ -32,3 +37,7 @@ cd RTIMU/Linux/python
 python3 setup.py build
 python3 setup.py install
 cd ~
+
+mkdir data
+
+echo "python3 /home/pi/handcam/v4collectionRig/main.py" >> /etc/rc.local
