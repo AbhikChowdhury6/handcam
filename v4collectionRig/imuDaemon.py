@@ -52,7 +52,7 @@ class ImuDaemon(run.RunDaemon):
 
                 timeStamp=round((time.time()),3)
 
-                print(str(timeStamp)+"  "+str(accelX) + "  " + str(accelY) + "  " + str(accelZ))
+                #print(str(timeStamp)+"  "+str(accelX) + "  " + str(accelY) + "  " + str(accelZ))
                 w.writerow([timeStamp,accelX,accelY,accelZ,gyroX,gyroY,gyroZ,roll,pitch,yaw])
                 time.sleep(poll_interval*(1.0/1000.0))
-                print(time.time()-lastTime)
+                #print(time.time()-lastTime)

@@ -67,8 +67,8 @@ pixels = neopixel.NeoPixel(board.D18, 2)
 
 
 LEDoutput = (0,0,0)
-recLightBrightness = 255
-statBrightness = 255
+recLightBrightness = 0
+statBrightness = 102
 
 recording=False
 green = statBrightness
@@ -78,20 +78,6 @@ loopCount = 0
 buttonPushedCount = 0
 
 transfered = False
-
-
-pixels[0] = ( 255,0,0)
-pixels[1] = ( 0,0,255)
-time.sleep(2)
-pixels[0] = ( 0,0,0)
-pixels[1] = ( 0,0,0)
-time.sleep(2)
-pixels[0] = ( 255,0,0)
-pixels[1] = ( 0,0,255)
-time.sleep(2)
-pixels[0] = ( 0,0,0)
-pixels[1] = ( 0,0,0)
-
 
 
 
@@ -110,7 +96,7 @@ while(True):
             if(not recording):
                 green = statBrightness
                 red = 0
-                pixels[1] = (0, 0, 0)
+                recLightBrightness = 0
             
                 os.system("python3 vidController.py stop")
                 os.system("python3 imuController.py stop")
@@ -130,7 +116,7 @@ while(True):
         
         if(buttonPushedCount == 10):
             green = statBrightness
-            pixels[1] = (recLightBrightness, recLightBrightness, recLightBrightness)
+            recLightBrightness = 255
             print("turning on light")
     else:
         buttonPushedCount = 0
@@ -142,7 +128,7 @@ while(True):
         print("starting Transfer")
         #set to blue
         pixels[0] = ( 0,0,statBrightness)
-        pixels[1] = ( 0,0,0)
+        recLightBrightness = 0
         
         #stop recordings if they're happening
         if(recording):
@@ -171,7 +157,7 @@ while(True):
 #        print("FLASH")
 
     pixels[0] = LEDoutput
-
+    pixels[1] = (recLightBrightness,recLightBrightness,recLightBrightness)
     #wait for a bit
     time.sleep(.1)
 
