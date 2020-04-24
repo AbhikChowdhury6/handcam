@@ -10,13 +10,32 @@ import unicodedata
 import zipfile
 import mysql.connector
 import platform
+import cv2
+from subprocess import  check_output, CalledProcessError, STDOUT 
+
 from flask import Flask, render_template, request, redirect, url_for
 
 from werkzeug.utils import secure_filename
-
 app = Flask(__name__)
 
 
+def get_length(filename):
+    command = [
+        'ffprobe', 
+        '-v', 
+        'error', 
+        '-show_entries', 
+        'format=duration', 
+        '-of', 
+        'default=noprint_wrappers=1:nokey=1', 
+        filename
+      ]
+
+    try:
+        output = check_output( command, stderr=STDOUT ).decode()
+    except CalledProcessError as e:
+        output = e.output.decode()
+    return output
 def creationdate(path_to_file):
     """
     Try to get the date that a file was created, falling back to when it was
@@ -35,17 +54,39 @@ def creationdate(path_to_file):
             return stat.st_mtime
 def file_upload(pathfile):
     zip = zipfile.ZipFile(pathfile)
-    zippedfilenames = (zip.namelist())
     zip.extractall()
     for name in zip.namelist():
         timemmodified = zip.getinfo(name).date_time
-        timeinstr = str(timemmodified[0])+"-"+str(timemmodified[1])+"-"+str(timemmodified[2])+"   "+str(timemmodified[3])+":"+str(timemmodified[4])+":"+str(timemmodified[5])
-        #timeinstr = time.strftime("%Y-%m-%d %H:%M:%S", timemmodified)
+        #timeinstr = str(timemmodified[0])+"-"+str(timemmodified[1])+"-"+str(timemmodified[2])+"   "+str(timemmodified[3])+":"+str(timemmodified[4])+":"+str(timemmodified[5])
+        dt_obj =datetime(*timemmodified[0:6])
+        timeinstr = dt_obj
         data = zip.read(name)
         print(name)
         print(timemmodified)
-        print(timeinstr)
-    #for i in range(0,len(zippedfilenames)):
+        vidcapture = cv2.VideoCapture(name)
+        fps = vidcapture.get(cv2.CAP_PROP_FPS)
+        totalNoFrames = vidcapture.get(cv2.CAP_PROP_FRAME_COUNT);
+        durationInSeconds = float(totalNoFrames) / float(fps)
+        print("durationInSeconds: ",durationInSeconds,"s")
+        durationofvideo = int(durationInSeconds)
+        #durationofvideo = time.strftime("%Y-%m-%d %H:%M:%S",clip.duration)
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            passwd="Emma150799!",
+            database="testdb"
+            )
+        mycursor = mydb.cursor()
+        #mycursor.execute("CREATE TABLE videos (title VARCHAR(255) PRIMARY KEY, url VARCHAR(255), timecreated DATETIME(6), durationinseconds INT(255))")
+        mysqlcommand = "INSERT INTO videos(title,url,timecreated,durationinseconds) VALUES (%s,%s,%s,%s)"
+        video1 = (name,"fakeurl",timeinstr,durationofvideo)
+        mycursor.execute(mysqlcommand,video1)
+        mycursor.execute("SELECT * FROM videos")
+        for tb in mycursor:
+            print(tb)
+
+        mydb.commit()
+        #for i in range(0,len(zippedfilenames)):
         #print(zippedfilenames[i])
         #str = zippedfilenames[i]
         #timestr = str.split(' ')
