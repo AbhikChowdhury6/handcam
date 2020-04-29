@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
     <title>Ask your hands</title>
@@ -319,68 +319,16 @@
       </section>
   
       <section class="timeline">
-        <ol>
-          <li>
-            <div>
-              <time>9:00 AM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>9:30 AM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>10:00 AM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>10:30 AM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>11:00 AM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>11:30 AM</time>
-          </li>
-          <li>
-            <div>
-              <time>12:00 PM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>12:30 PM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>1:00 PM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>1:30 PM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>2:00 PM</time>
-            </div>
-          </li>
-          <li>
-            <div>
-              <time>2:30 PM</time>
-            </div>
-          </li>
-          <li></li>
-        </ol>
+          <ol>
+              {% for data in data %}
+                            <li>
+                                <div>
+                                    <time>{{ data }}</time>
+                                </div>
+                            </li>
+              {% endfor %}
+              <li></li>
+          </ol>
   
         <div class="arrows">
           <button class="arrow arrow__prev disabled" disabled>

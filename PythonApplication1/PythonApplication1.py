@@ -17,8 +17,8 @@ from flask import Flask, render_template, request, redirect, url_for
 
 from werkzeug.utils import secure_filename
 app = Flask(__name__)
-
-
+data=[]
+videonums=[]
 def get_length(filename):
     command = [
         'ffprobe', 
@@ -55,12 +55,12 @@ def creationdate(path_to_file):
 def file_upload(pathfile):
     zip = zipfile.ZipFile(pathfile)
     zip.extractall()
+    intcounter =0
     for name in zip.namelist():
-        timemmodified = zip.getinfo(name).date_time
+        '''timemmodified = zip.getinfo(name).date_time
         #timeinstr = str(timemmodified[0])+"-"+str(timemmodified[1])+"-"+str(timemmodified[2])+"   "+str(timemmodified[3])+":"+str(timemmodified[4])+":"+str(timemmodified[5])
         dt_obj =datetime(*timemmodified[0:6])
         timeinstr = dt_obj
-        data = zip.read(name)
         print(name)
         print(timemmodified)
         vidcapture = cv2.VideoCapture(name)
@@ -68,8 +68,14 @@ def file_upload(pathfile):
         totalNoFrames = vidcapture.get(cv2.CAP_PROP_FRAME_COUNT);
         durationInSeconds = float(totalNoFrames) / float(fps)
         print("durationInSeconds: ",durationInSeconds,"s")
-        durationofvideo = int(durationInSeconds)
-        #durationofvideo = time.strftime("%Y-%m-%d %H:%M:%S",clip.duration)
+        durationofvideo = int(durationInSeconds)'''
+        #durationofvideo = time.strftime("%Y-%m-%d %H:%M:%S",clip.duration'''
+        timemodified = name.split('-')[0].replace('.',':')
+        dt_obj = datetime.strptime(timemodified, '%H:%M').time()
+        timeinstr = dt_obj
+        if name.split('-')[1] not in videonums:
+            data.append(dt_obj)
+            videonums.append(name.split('-')[1])
         mydb = mysql.connector.connect(
             host="localhost",
             user="root",
@@ -78,14 +84,22 @@ def file_upload(pathfile):
             )
         mycursor = mydb.cursor()
         #mycursor.execute("CREATE TABLE videos (title VARCHAR(255) PRIMARY KEY, url VARCHAR(255), timecreated DATETIME(6), durationinseconds INT(255))")
-        mysqlcommand = "INSERT INTO videos(title,url,timecreated,durationinseconds) VALUES (%s,%s,%s,%s)"
-        video1 = (name,"fakeurl",timeinstr,durationofvideo)
-        mycursor.execute(mysqlcommand,video1)
-        mycursor.execute("SELECT * FROM videos")
-        for tb in mycursor:
-            print(tb)
-
-        mydb.commit()
+        '''if(zip.namelist()[intcounter+1]!=name.split('-')[1]):
+            mysqlcommand = "INSERT INTO videos(title,url,timecreated,durationinseconds) VALUES (%s,%s,%s,%s)"
+            start_time = data[len(data)-1]
+            stop_time = dt_obj
+            date = datetime.strptime('24052010', "%d%m%Y").date()
+            datetime1 = datetime.combine(date, start_time)
+            datetime2 = datetime.combine(date, stop_time)
+            durationofvideo = datetime1 - datetime2
+            video1 = (name,"fakeurl",timeinstr,durationofvideo)
+            mycursor.execute(mysqlcommand,video1)
+            mycursor.execute("SELECT * FROM videos")
+            for tb in mycursor:
+                print(tb)
+            mydb.commit()'''
+        intcounter = intcounter+1
+            
         #for i in range(0,len(zippedfilenames)):
         #print(zippedfilenames[i])
         #str = zippedfilenames[i]
@@ -102,7 +116,8 @@ def file_upload(pathfile):
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+    #data = ["4:00 AM","4:00 AM","4:00 AM","4:00 AM","4:00 AM"]
+    return render_template('index.html', data = data)
 
 @app.route('/my-link/')
 def my_link():
@@ -133,4 +148,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-  app.run(debug=False)
+    app.run(debug=False)
