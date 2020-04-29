@@ -54,7 +54,7 @@ def creationdate(path_to_file):
             return stat.st_mtime
 def file_upload(pathfile):
     zip = zipfile.ZipFile(pathfile)
-    zip.extractall()
+    zip.extractall('temp')
     intcounter =0
     for name in zip.namelist():
         '''timemmodified = zip.getinfo(name).date_time
