@@ -1,11 +1,14 @@
 import time
 import cv2
+import logging
 
 from daemons.prefab import run
 
 class VidDaemon(run.RunDaemon):
 
     def run(self):
+        vdlogfile = os.path.join(os.getcwd(), "VidDaemon.log")
+        logging.basicConfig(filename=vdlogfile, level=logging.DEBUG)
         print("starting Video Rec")
         cam = cv2.VideoCapture(0)
         cam.set(cv2.CAP_PROP_FRAME_WIDTH, 480)

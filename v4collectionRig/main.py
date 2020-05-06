@@ -54,6 +54,9 @@ import board
 import neopixel
 import os
 import RPi.GPIO as GPIO   
+import logging
+mlogfile = os.path.join(os.getcwd(), "main.log")
+logging.basicConfig(filename=mlogfile, level=logging.DEBUG)
 
 GPIO.setmode(GPIO.BCM)           # Set's GPIO pins to BCM GPIO numbering
 INPUT_PIN = 4          
@@ -149,7 +152,7 @@ while(True):
         red = 0
 
         #TODO reset recording number to zero
-        vidNF = open( "vidnum.txt", "w")
+        vidNF = open( "/root/vidnum.txt", "w")
         f.write("0")
         f.close()
 
