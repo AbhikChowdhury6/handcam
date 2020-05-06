@@ -45,4 +45,8 @@ echo "0" >> /root/vidnum.txt
 
 
 cp -rv /home/pi/handcam/v4collectionRig/* /root/
+
+apt-get install mlocate
+updatedb
+
 #echo "python3 /root/main.py &" >> /etc/rc.local
