@@ -143,7 +143,7 @@ while(True):
         time.sleep(2)
         
         #zip the folder and put it on the USB
-        os.system("zip -r /media/pi/" + usbName[0] + "/" + str(time.time()) + ".zip data")
+        os.system("zip -r /media/pi/" + usbName[0] + "/" + str(time.time()) + ".zip /home/pi/data")
         
         #remove old data
         os.system("rm /home/pi/data/*.jpg")
@@ -155,8 +155,8 @@ while(True):
 
         #TODO reset recording number to zero
         vidNF = open( "/home/pi/vidnum.txt", "w")
-        f.write("0")
-        f.close()
+        vidNF.write("0")
+        vidNF.close()
 
         print("finished Transfer")
 
