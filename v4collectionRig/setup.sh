@@ -32,14 +32,17 @@ sudo pip3 install opencv-contrib-python==3.4.3.18
 
 sudo apt-get install -y cmake
 sudo apt-get install -y qt4-default
+cd /home/pi
 git clone https://github.com/RPi-Distro/RTIMULib/ RTIMU
-python3 /home/pi/RTIMU/Linux/pythonsetup.py build
-python3 /home/pi/RTIMU/Linux/pythonsetup.py install
+cd /home/pi/RTIMU/Linux/python
+python3 /home/pi/RTIMU/Linux/python/setup.py build
+python3 /home/pi/RTIMU/Linux/python/setup.py install
+cd ~
 
 mkdir /home/pi/data
 mkdir /media/pi
 echo "0" >> /root/vidnum.txt
 
 
-cp -v /home/pi/handcam/v4collectionRig/* /root/
-echo "python3 /root/main.py &" >> /etc/rc.local
+cp -rv /home/pi/handcam/v4collectionRig/* /root/
+#echo "python3 /root/main.py &" >> /etc/rc.local
