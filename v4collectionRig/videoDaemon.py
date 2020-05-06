@@ -11,11 +11,11 @@ class VidDaemon(run.RunDaemon):
         cam.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
         cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
         
-        vidNF = open( "vidnum.txt", "r")
+        vidNF = open( "/root/vidnum.txt", "r")
         vidNum = int(vidNF.read())
         vidNF.close()
 
-        vidNF = open( "vidnum.txt", "w")
+        vidNF = open( "/root/vidnum.txt", "w")
         vidNF.write(str(vidNum + 1))
         vidNF.close()
 

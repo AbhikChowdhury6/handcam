@@ -1,7 +1,7 @@
 
 git pull
 
-rm /root/*
+rm -r /root/*
 
 echo "0" >> /root/vidnum.txt
 
