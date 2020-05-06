@@ -11,8 +11,18 @@ class VidDaemon(run.RunDaemon):
         cam.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
         cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
         
+        vidNF = open( "vidnum.txt", "r")
+        vidNum = int(vidNF.read())
+        vidNF.close()
+
+        vidNF = open( "vidnum.txt", "w")
+        vidNF.write(str(vidNum + 1))
+        vidNF.close()
+
+        
         while True:
             lastTime = time.time()
             ret, frame = cam.read()
-            cv2.imwrite("/home/pi/data/" + str(time.time()) + ".jpg", frame)
+            if(ret):
+                cv2.imwrite("/home/pi/data/" + str(time.time()) + "-" + str(vidNum) +".jpg", frame)
             #print(time.time()-lastTime)
