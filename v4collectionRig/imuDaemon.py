@@ -10,9 +10,9 @@ from daemons.prefab import run
 class ImuDaemon(run.RunDaemon):
 
     def run(self):
-        idlogfile = os.path.join(os.getcwd(), "IMUDaemon.log")
-        logging.basicConfig(filename=idlogfile, level=logging.DEBUG)
-        
+        # idlogfile = os.path.join(os.getcwd(), "IMUDaemon.log")
+        # logging.basicConfig(filename=idlogfile, level=logging.DEBUG)
+
         SETTINGS_FILE = "/home/pi/myProject/RTIMULib.ini"
         s = RTIMU.Settings(SETTINGS_FILE)
         imu = RTIMU.RTIMU(s)

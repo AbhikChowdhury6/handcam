@@ -56,17 +56,9 @@ import os
 import RPi.GPIO as GPIO   
 import logging
 
-mlogfile = os.path.join(os.getcwd(), "main.log")
-logging.basicConfig(filename=mlogfile, level=logging.DEBUG)
+# mlogfile = os.path.join(os.getcwd(), "main.log")
+# logging.basicConfig(filename=mlogfile, level=logging.DEBUG)
 
-root = logging.getLogger()
-root.setLevel(logging.DEBUG)
-
-# handler = logging.StreamHandler(sys.stdout)
-# handler.setLevel(logging.DEBUG)
-# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-# handler.setFormatter(formatter)
-# root.addHandler(handler)
 
 GPIO.setmode(GPIO.BCM)           # Set's GPIO pins to BCM GPIO numbering
 INPUT_PIN = 4          
@@ -111,8 +103,8 @@ while(True):
                 red = 0
                 recLightBrightness = 0
             
-                os.system("python3 /root/vidController.py stop")
-                os.system("python3 /root/imuController.py stop")
+                os.system("python3 vidController.py stop")
+                os.system("python3 imuController.py stop")
                 print("stopped both processes")
 
                 transfered = False
@@ -122,8 +114,8 @@ while(True):
                 red = statBrightness
                 green= 0
             
-                os.system("python3 /root/imuController.py start")
-                os.system("python3 /root/vidController.py start")
+                os.system("python3 imuController.py start")
+                os.system("python3 vidController.py start")
                 print("started both processes")
 
         
@@ -162,7 +154,7 @@ while(True):
         red = 0
 
         #TODO reset recording number to zero
-        vidNF = open( "/root/vidnum.txt", "w")
+        vidNF = open( "/home/pi/vidnum.txt", "w")
         f.write("0")
         f.close()
 

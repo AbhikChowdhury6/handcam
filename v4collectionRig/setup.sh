@@ -41,12 +41,9 @@ cd ~
 
 mkdir /home/pi/data
 mkdir /media/pi
-echo "0" >> /root/vidnum.txt
-
-
-cp -rv /home/pi/handcam/v4collectionRig/* /root/
+echo "0" >> /home/pi/vidnum.txt
 
 apt-get install mlocate
 updatedb
 
-#echo "python3 /root/main.py &" >> /etc/rc.local
+echo "cd /home/pi/handcam/v4collectionRig/ && python3 main.py &"
