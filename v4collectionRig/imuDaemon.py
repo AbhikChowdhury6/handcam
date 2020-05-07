@@ -13,7 +13,7 @@ class ImuDaemon(run.RunDaemon):
         # idlogfile = os.path.join(os.getcwd(), "IMUDaemon.log")
         # logging.basicConfig(filename=idlogfile, level=logging.DEBUG)
 
-        SETTINGS_FILE = "/home/pi/myProject/RTIMULib.ini"
+        SETTINGS_FILE = "/home/pi/RTIMULib.ini"
         s = RTIMU.Settings(SETTINGS_FILE)
         imu = RTIMU.RTIMU(s)
 
@@ -54,7 +54,7 @@ class ImuDaemon(run.RunDaemon):
                 pitch = round(degrees(fusionPose[1]),2)
                 yaw = round(degrees(fusionPose[2]),2)
 
-                timeStamp=round((time.time()),3)
+                timeStamp=time.time()
 
                 #print(str(timeStamp)+"  "+str(accelX) + "  " + str(accelY) + "  " + str(accelZ))
                 w.writerow([timeStamp,accelX,accelY,accelZ,gyroX,gyroY,gyroZ,roll,pitch,yaw])
