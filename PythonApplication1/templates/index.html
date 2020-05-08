@@ -162,6 +162,11 @@
             font-weight: bold;
             margin-bottom: 8px;
         }
+        .timeline button {
+            outline: none;
+            background: transparent;
+            border: none !important;
+        }
         .button {
             display: block;
             font-size: 1.2rem;
@@ -334,8 +339,10 @@
                       {% for data in data %}
                       <li>
                           <div>
-                              <input type="submit" name="time" value={{data}} class="button" />
+                              <button>
+                              <input type="submit" name="time" value={{data}} class="button"/>
                                </input>
+                                  </button>
                           </div>
                       </li>
                       {% endfor %}
@@ -383,7 +390,7 @@
               </div>
               <br />
               <div class="btn">
-                  <input type="submit" name="delete" value="Delete Selected">
+                  <input type="submit" name="delete" value="Delete Selected" class="btn">
               </div>
               <br />
       </div>

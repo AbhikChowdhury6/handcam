@@ -148,6 +148,7 @@ def upload_file():
             valuearray = request.form.getlist("images")
             for value in valuearray:
                 print(value)
+                value1 = value
                 value = value.replace("/","\\")
                 dirname = os.path.dirname(__file__)
                 value=dirname +"\\"+ value
@@ -155,6 +156,7 @@ def upload_file():
                 print(value)
                 if os.path.exists(value):
                     print("deleted")
+                    imagedata.remove(value1)
                     os.remove(value)
             return redirect(request.url)
     elif request.method == 'POST':
