@@ -10,35 +10,40 @@ import unicodedata
 import zipfile
 import mysql.connector
 import platform
-import cv2
+#import cv2
 from fnmatch import fnmatch
-from subprocess import  check_output, CalledProcessError, STDOUT 
+from subprocess import check_output, CalledProcessError, STDOUT
 
 from flask import Flask, render_template, request, redirect, url_for
 
 from werkzeug.utils import secure_filename
+
 app = Flask(__name__)
-data=[]
-imagedata=[]
-videonums=[]
-allfilenamesindatetime=[]
+data = []
+imagedata = []
+videonums = []
+allfilenamesindatetime = []
+
+
 def get_length(filename):
     command = [
-        'ffprobe', 
-        '-v', 
-        'error', 
-        '-show_entries', 
-        'format=duration', 
-        '-of', 
-        'default=noprint_wrappers=1:nokey=1', 
+        'ffprobe',
+        '-v',
+        'error',
+        '-show_entries',
+        'format=duration',
+        '-of',
+        'default=noprint_wrappers=1:nokey=1',
         filename
-      ]
+    ]
 
     try:
-        output = check_output( command, stderr=STDOUT ).decode()
+        output = check_output(command, stderr=STDOUT).decode()
     except CalledProcessError as e:
         output = e.output.decode()
     return output
+
+
 def creationdate(path_to_file):
     """
     Try to get the date that a file was created, falling back to when it was
@@ -55,39 +60,41 @@ def creationdate(path_to_file):
             # We're probably on Linux. No easy way to get creation dates here,
             # so we'll settle for when its content was last modified.
             return stat.st_mtime
+
+
 def file_upload(pathfile):
     zip = zipfile.ZipFile(pathfile)
     zip.extractall('static/temp')
     dirname = os.path.dirname(__file__)
-    root=dirname +"\\"+ "static\\temp\\home\\pi\\data"
+    root = dirname + "//" + "static//temp//home//pi//data"
     pattern = "*.jpg"
     print(root)
-    intcounter =0
+    intcounter = 0
     for path, subdirs, files in os.walk(root):
         for name in files:
             if fnmatch(name, pattern):
-                arraytime  = name.split('-')
+                arraytime = name.split('-')
                 if len(arraytime) == 1:
-                    name = name+"-video1"
+                    name = name + "-video1"
                 timestamp = name.split('-')[0]
                 timestamp = timestamp.split(".jpg")[0]
-                #print(timestamp)
+                # print(timestamp)
                 dt_obj = datetime.fromtimestamp(float(timestamp)).time().strftime("%H:%M")
                 allfilenamesindatetime.append(timestamp)
                 timeinstr = dt_obj
-                #print(dt_obj)
+                # print(dt_obj)
                 if name.split('-')[1] not in videonums:
                     data.append(dt_obj)
                     videonums.append(name.split('-')[1])
-                mydb = mysql.connector.connect(
-                        host="localhost",
-                        user="root",
-                        passwd="Emma150799!",
-                        database="testdb"
+                '''mydb = mysql.connector.connect(
+                    host="localhost",
+                    user="root",
+                    passwd="Emma150799!",
+                    database="testdb"
                 )
-                mycursor = mydb.cursor()
-                intcounter = intcounter+1
-        #mycursor.execute("CREATE TABLE videos (title VARCHAR(255) PRIMARY KEY, url VARCHAR(255), timecreated DATETIME(6), durationinseconds INT(255))")
+                mycursor = mydb.cursor()'''
+                intcounter = intcounter + 1
+        # mycursor.execute("CREATE TABLE videos (title VARCHAR(255) PRIMARY KEY, url VARCHAR(255), timecreated DATETIME(6), durationinseconds INT(255))")
         '''if(zip.namelist()[intcounter+1]!=name.split('-')[1]):
             mysqlcommand = "INSERT INTO videos(title,url,timecreated,durationinseconds) VALUES (%s,%s,%s,%s)"
             start_time = data[len(data)-1]
@@ -102,33 +109,35 @@ def file_upload(pathfile):
             for tb in mycursor:
                 print(tb)
             mydb.commit()'''
-            
-        #for i in range(0,len(zippedfilenames)):
-        #print(zippedfilenames[i])
-        #str = zippedfilenames[i]
-        #timestr = str.split(' ')
-        #day = timestr[0].split('-')[0];
-        #month = timestr[0].split('-')[1];
-        #year = timestr[0].split('-')[2];
-        #hour = timestr[1].split('.')[0];    
-        #minute = timestr[1].split('.')[1];
-        #seconds = timestr[1].split('.')[2];
-        #mtime = creationdate(zippedfilenames[i])
-        #print(mtime)
+
+        # for i in range(0,len(zippedfilenames)):
+        # print(zippedfilenames[i])
+        # str = zippedfilenames[i]
+        # timestr = str.split(' ')
+        # day = timestr[0].split('-')[0];
+        # month = timestr[0].split('-')[1];
+        # year = timestr[0].split('-')[2];
+        # hour = timestr[1].split('.')[0];
+        # minute = timestr[1].split('.')[1];
+        # seconds = timestr[1].split('.')[2];
+        # mtime = creationdate(zippedfilenames[i])
+        # print(mtime)
 
 
 @app.route('/')
 def index():
-    #data = ["4:00 AM","4:00 AM","4:00 AM","4:00 AM","4:00 AM"]
+    # data = ["4:00 AM","4:00 AM","4:00 AM","4:00 AM","4:00 AM"]
     dirname = os.path.dirname(__file__)
-    value=dirname +"\\"+ 'temp/7.05-video1.jpg'
-    #imagedata = [url_for('static', filename='temp/7.05-video1.jpg'),url_for('static', filename='temp/7.05-video1.jpg'),url_for('static', filename='temp/7.05-video1.jpg')]
-    return render_template('index.html', data = data, imagedata = imagedata)
+    value = dirname + "\\" + 'temp/7.05-video1.jpg'
+    # imagedata = [url_for('static', filename='temp/7.05-video1.jpg'),url_for('static', filename='temp/7.05-video1.jpg'),url_for('static', filename='temp/7.05-video1.jpg')]
+    return render_template('index.html', data=data, imagedata=imagedata)
+
 
 @app.route('/my-link/')
 def my_link():
-  print('I got clicked!')
-  return render_template('index.html')
+    print('I got clicked!')
+    return render_template('index.html')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -137,26 +146,29 @@ def upload_file():
         print(request.form)
         print(request.form.getlist("time"))
         for filename in allfilenamesindatetime:
-            filenameinhourandminute=datetime.fromtimestamp(float(filename)).time().strftime("%H:%M")
-            if(filenameinhourandminute==request.form.getlist("time")[0]):
-                stringfilename = 'temp/home/pi/data/'+str(filename)+'.jpg'
+            filenameinhourandminute = datetime.fromtimestamp(float(filename)).time().strftime("%H:%M")
+            if (filenameinhourandminute == request.form.getlist("time")[0]):
+                stringfilename = 'temp/home/pi/data/' + str(filename) + '.jpg'
                 imagedata.append(url_for('static', filename=stringfilename))
         return redirect(request.url)
     elif "delete" in request.form:
-        if request.method== 'POST':
+        if request.method == 'POST':
             print("checked")
             valuearray = request.form.getlist("images")
             for value in valuearray:
                 print(value)
                 value1 = value
-                value = value.replace("/","\\")
+                #path change varies for mac and windows
+                value = value.replace("/", "//")
                 dirname = os.path.dirname(__file__)
-                value=dirname +"\\"+ value
+                #path change varies for mac and windows
+                value = dirname + "//" + value
                 print(dirname)
                 print(value)
                 if os.path.exists(value):
                     print("deleted")
                     imagedata.remove(value1)
+                    print('deleting')
                     os.remove(value)
             return redirect(request.url)
     elif request.method == 'POST':
@@ -173,8 +185,8 @@ def upload_file():
         if file:
             filename = secure_filename(file.filename)
             file.save(filename)
-            print (url_for('upload_file',
-                                    filename=filename))
+            print(url_for('upload_file',
+                          filename=filename))
             file_upload(file)
             return redirect(url_for('upload_file', filename=filename))
     return
