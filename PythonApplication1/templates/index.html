@@ -156,30 +156,35 @@
         border-width: 8px 0 0 8px;
         border-color: transparent transparent transparent white;
       }
-
-      .timeline time {
-        display: block;
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 8px;
-      }
-      .timeline button {
-          background: transparent;
-          border: none !important;
-      }
+        .timeline input {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .button {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            outline: none;
+            cursor: pointer;
+            background: transparent;
+            border: none !important;
+        }
 
       /* TIMELINE ARROWS
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-      .timeline .arrows {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
+        .timeline .arrows {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
-      .timeline .arrows .arrow__prev {
-        margin-right: 20px;
-      }
+            .timeline .arrows .arrow__prev {
+                margin-right: 20px;
+            }
 
       .timeline .disabled {
         opacity: 0.5;
@@ -305,150 +310,123 @@
     </style>
   </head>
   <body>
-  
-    <div class="container text-center">
-      <header class="align-center">
-        <h2>Track your data</h2>
-        <p>Please upload your video and mark the timelines</p>
-        <form action="" method="post" enctype="multipart/form-data">
-          <input type="file" name="file" class="btn" /><br /><br />
-          <input type="submit" value="Upload" class="btn" />
-        </form>
-      </header>
-      <br />
-      <section class="section intro">
-        <div class="container">
-          <h1>Select event from the Timeline &rarr;</h1>
-        </div>
-      </section>
-  
-      <section class="timeline">
-          <ol>
-              {% for data in data %}
-                            <li>
-                                <div>
-                                    <button>
-                                        <time>{{ data }}</time>
-                                    </button>
-                                </div>
-                            </li>
-              {% endfor %}
-              <li></li>
-          </ol>
-  
-        <div class="arrows">
-          <button class="arrow arrow__prev disabled" disabled>
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/arrow_prev.svg"
-              alt="prev timeline arrow"
-            />
-          </button>
-          <button class="arrow arrow__next">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/arrow_next.svg"
-              alt="next timeline arrow"
-            />
-          </button>
-        </div>
-      </section>
-      <br /><br />
-      <!-- <div class="btn">Display</div> -->
-      <br /><br />
-      <label for="actions">Choose an action:</label>
 
-        <select id="actions" class="btn">
-          <option value="Walking">Walking</option>
-          <option value="Sitting">Sitting</option>
-          <option value="Eating">Eating</option>
-          <option value="Lying down">Lying down</option>
-        </select>
-      <div class="row">
-        <div class="col-md-4 nopad">
-          <label class="image-checkbox">
-          <img src="images/vid1.png" class="img-fluid" />
-          <img
-            src="images/play-icon2.png"
-            class="play-btn"
-            data-toggle="modal"
-            data-target="#play-video-1"
-          />
-          <input type="checkbox" name="image[]" value="" />
-        </label>
-        </div>
+      <div class="container text-center">
+          <header class="align-center">
+              <h2>Track your data</h2>
+              <p>Please upload your video and mark the timelines</p>
+              <form action="" method="post" enctype="multipart/form-data">
+                  <input type="file" name="file" class="btn" /><br /><br />
+                  <input type="submit" value="Upload" class="btn" />
+              </form>
+          </header>
+          <br />
+          <section class="section intro">
+              <div class="container">
+                  <h1>Select event from the Timeline &rarr;</h1>
+              </div>
+          </section>
 
-        <div class="col-md-4 nopad">.
-          <label class="image-checkbox">
-          <img src="images/vid2.png" class="img-fluid" />
-          <img
-            src="images/play-icon2.png"
-            class="play-btn"
-            data-toggle="modal"
-            data-target="#play-video-2"
-          />
-          <input type="checkbox" name="image[]" value="" />
+          <section class="timeline">
+              <ol>
+                  <form method="POST" action="/">
 
-        </label>
-        </div>
+                      {% for data in data %}
+                      <li>
+                          <div>
+                              <input type="submit" name="time" value={{data}} class="button" />
+                               </input>
+                          </div>
+                      </li>
+                      {% endfor %}
+                      <li></li>
 
+                  </form>
+              </ol>
 
-       <div class="col-md-4 nopad">
-          <label class="image-checkbox">
-          <img src="images/vid3.png" class="img-fluid" />
-          <img
-            src="images/play-icon2.png"
-            class="play-btn"
-            data-toggle="modal"
-            data-target="#play-video-3"
-          />
-          <input type="checkbox" name="image[]" value="" />
+              <div class="arrows">
+                  <button class="arrow arrow__prev disabled" disabled>
+                      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/arrow_prev.svg"
+                           alt="prev timeline arrow" />
+                  </button>
+                  <button class="arrow arrow__next">
+                      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/arrow_next.svg"
+                           alt="next timeline arrow" />
+                  </button>
+              </div>
+          </section>
+          <br /><br />
+          <!-- <div class="btn">Display</div> -->
+          <br /><br />
+          <label for="actions">Choose an action:</label>
 
-        </label>
-        </div>
-        
+          <select id="actions" class="btn">
+              <option value="Walking">Walking</option>
+              <option value="Sitting">Sitting</option>
+              <option value="Eating">Eating</option>
+              <option value="Lying down">Lying down</option>
+          </select>
+
+          <form method="POST" action="/">
+              <div class="row">
+                  {% for imagedata in imagedata %}
+                  <div class="col-md-4 nopad">
+                      <label class="image-checkbox">
+                          <input type="checkbox" name="images" value="{{imagedata}}" id="id3" />
+                          <label for="id3">
+                              <img src="{{imagedata}}" class="img-fluid" />
+                          </label>
+                      </label>
+                  </div>
+                  {% endfor %}
+
+              </div>
+              <br />
+              <div class="btn">
+                  <input type="submit" name="delete" value="Delete Selected">
+              </div>
+              <br />
       </div>
-      <br /><br />
-      <div class="btn">Delete Selected</div>
-      <br /><br />
-    </div>
+      </form>
 
-    <div class="modal fade" id="play-video-1">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <button onclick="myFunction1()" type="button">Note time</button>
-          <div class="modal-body">
-            <video id="myVideo1" width="100%" controls>
-              <source src="images/vid1.mp4" type="video/mp4" />
-            </video>
+      <div class="modal fade" id="play-video-1">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <button onclick="myFunction1()" type="button">Note time</button>
+                  <div class="modal-body">
+                      <video id="myVideo1" width="100%" controls>
+                          <source src="images/vid1.mp4" type="video/mp4" />
+                      </video>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
 
-    <div class="modal fade" id="play-video-2">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <button onclick="myFunction2()" type="button">Note time</button>
-          <div class="modal-body">
-            <video id="myVideo2" width="100%" controls>
-              <source src="images/vid2.mp4" type="video/mp4" />
-            </video>
+      <div class="modal fade" id="play-video-2">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <button onclick="myFunction2()" type="button">Note time</button>
+                  <div class="modal-body">
+                      <video id="myVideo2" width="100%" controls>
+                          <source src="images/vid2.mp4" type="video/mp4" />
+                      </video>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
 
-    <div class="modal fade" id="play-video-3">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <button onclick="myFunction3()" type="button">Note time</button>
-          <div class="modal-body">
-            <video id="myVideo3" width="100%" controls>
-              <source src="images/vid3.mp4" type="video/mp4" />
-            </video>
+      <div class="modal fade" id="play-video-3">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <button onclick="myFunction3()" type="button">Note time</button>
+                  <div class="modal-body">
+                      <video id="myVideo3" width="100%" controls>
+                          <source src="images/vid3.mp4" type="video/mp4" />
+                      </video>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
   </body>
   <script>
     (function() {
@@ -578,7 +556,8 @@ function setKeyboardFn(prev, next) {
 // init the state from the input
 $(".image-checkbox").each(function () {
   if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
-    $(this).addClass('image-checkbox-checked');
+      $(this).addClass('image-checkbox-checked');
+      console.log($(".image-checkbox-checked"));
   }
   else {
     $(this).removeClass('image-checkbox-checked');
@@ -589,8 +568,7 @@ $(".image-checkbox").each(function () {
 $(".image-checkbox").on("click", function (e) {
   $(this).toggleClass('image-checkbox-checked');
   var $checkbox = $(this).find('input[type="checkbox"]');
-  $checkbox.prop("checked",!$checkbox.prop("checked"))
-
+    $checkbox.prop("checked", !$checkbox.prop("checked"));
   e.preventDefault();
 });
 
