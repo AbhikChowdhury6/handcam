@@ -19,21 +19,12 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-<<<<<<< HEAD
 data=[]
 imagedata=[]
 imagedatacopy=[]
 videonums=[]
 allfilenamesindatetime=[]
 global staticcurrentvideotime
-=======
-data = []
-imagedata = []
-videonums = []
-allfilenamesindatetime = []
-
-
->>>>>>> d136cb326ea89618bdec7932139e5e23e7b7a6ac
 def get_length(filename):
     command = [
         'ffprobe',
@@ -158,28 +149,17 @@ def upload_file():
         print(request.form)
         print(request.form.getlist("time"))
         for filename in allfilenamesindatetime:
-<<<<<<< HEAD
             filenameinhourandminute=datetime.fromtimestamp(float(filename)).time().strftime("%H:%M")
             staticcurrentvideotime = filenameinhourandminute
             if(filenameinhourandminute==request.form.getlist("time")[0]):                
                 stringfilename = 'temp/home/pi/data/'+str(filename)+'.jpg'
-=======
-            filenameinhourandminute = datetime.fromtimestamp(float(filename)).time().strftime("%H:%M")
-            if (filenameinhourandminute == request.form.getlist("time")[0]):
-                stringfilename = 'temp/home/pi/data/' + str(filename) + '.jpg'
->>>>>>> d136cb326ea89618bdec7932139e5e23e7b7a6ac
                 imagedata.append(url_for('static', filename=stringfilename))
                 imagedatacopy.append(url_for('static', filename=stringfilename))
         print(len(imagedata))
         return redirect(request.url)
     elif "delete" in request.form:
-<<<<<<< HEAD
         if request.method== 'POST':
             print(staticcurrentvideotime)
-            
-=======
-        if request.method == 'POST':
->>>>>>> d136cb326ea89618bdec7932139e5e23e7b7a6ac
             print("checked")
             print(len(imagedata))
             #valuearray = request.form.getlist("images")
@@ -188,7 +168,6 @@ def upload_file():
             for value in imagedatacopy:
                 #print(value)
                 value1 = value
-<<<<<<< HEAD
                 #print(value1)
                 value1 = value1.replace("/","\\")
                 value1= dirname +"\\"+ value1                
@@ -203,25 +182,11 @@ def upload_file():
                     print("path not found")
                 imagedatacopy = imagedata
             data.remove(staticcurrentvideotime)
-=======
-                #path change varies for mac and windows
-                value = value.replace("/", "//")
-                dirname = os.path.dirname(__file__)
-                #path change varies for mac and windows
-                value = dirname + "//" + value
-                print(dirname)
-                print(value)
-                if os.path.exists(value):
-                    print("deleted")
-                    imagedata.remove(value1)
-                    print('deleting')
-                    os.remove(value)
->>>>>>> d136cb326ea89618bdec7932139e5e23e7b7a6ac
             return redirect(request.url)
     elif request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part')
+            print('No file part')
             return redirect(request.url)
         file = request.files['file']
         # if user does not select file, browser also
