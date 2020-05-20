@@ -143,7 +143,7 @@ while(True):
         time.sleep(2)
         
         #zip the folder and put it on the USB
-        os.system("zip -r /media/pi/" + usbName[0] + "/" + str(time.time()) + ".zip /home/pi/data")
+        os.system("cd /home/pi/ && zip -r /media/pi/" + usbName[0] + "/" + str(time.time()) + ".zip data")
         
         #remove old data
         os.system("rm /home/pi/data/*.jpg")
