@@ -151,7 +151,7 @@ def upload_file():
         for filename in allfilenamesindatetime:
             filenameinhourandminute=datetime.fromtimestamp(float(filename)).time().strftime("%H:%M")
             staticcurrentvideotime = filenameinhourandminute
-            if(filenameinhourandminute==request.form.getlist("time")[0]):                
+            if(filenameinhourandminute==request.form.getlist("time")[0]):
                 stringfilename = 'temp/home/pi/data/'+str(filename)+'.jpg'
                 imagedata.append(url_for('static', filename=stringfilename))
                 imagedatacopy.append(url_for('static', filename=stringfilename))
@@ -169,9 +169,9 @@ def upload_file():
                 #print(value)
                 value1 = value
                 #print(value1)
-                value1 = value1.replace("/","\\")
-                value1= dirname +"\\"+ value1                
-                value1 = value1.replace("\\\\","\\")
+                value1 = value1.replace("/","//")
+                value1= dirname +"//"+ value1
+                value1 = value1.replace("////","//")
                 #print(dirname)
                 #print(value1)
                 if os.path.exists(value1):
