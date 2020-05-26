@@ -743,7 +743,8 @@
 
 <script>
     var slideIndex = 0;
-    showSlides();
+
+    automatedShowSlides();
 
     // Next/previous controls
     function plusDivs(n) {
@@ -770,7 +771,8 @@
         slides[slideIndex - 1].style.display = "block";
         dots[slideIndex - 1].className += " active";
     }
-    function showSlides() {
+    function automatedShowSlides() {
+
         var i;
         var slides = document.getElementsByClassName("mySlides");
         for (i = 0; i < slides.length; i++) {
@@ -779,7 +781,7 @@
         slideIndex++;
         if (slideIndex > slides.length) { slideIndex = 1 }
         slides[slideIndex - 1].style.display = "block";
-        setTimeout(showSlides, 2000); // Change image every 2 seconds
+        setTimeout(automatedShowSlides, 2000); // Change image every 2 seconds
     }
 </script>
 </html>
