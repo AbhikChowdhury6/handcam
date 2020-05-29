@@ -479,10 +479,14 @@
         <label for="actions">Choose an action:</label>
 
         <select id="actions" class="btn">
+            <option value="Pre-Set">Pre-Set</option>
+            <option value="Empty">Empty</option>
+            <!--
             <option value="Walking">Walking</option>
             <option value="Sitting">Sitting</option>
             <option value="Eating">Eating</option>
             <option value="Lying down">Lying down</option>
+            -->
         </select>
 
         <form method="POST" action="/">
@@ -491,7 +495,7 @@
                 <!-- Full-width images with number and caption text -->
                 {% for imagedata in imagedata %}
 
-                <div class="mySlides fade">
+                <div class="mySlides">
                     <div class="numbertext">{{loop.index}} / {{loop.length}}</div>
                     <img src="{{imagedata}}" style="width:50%">
                     <!--<div class="text">Caption Text</div>-->
@@ -742,9 +746,11 @@
 </script>
 
 <script>
-    var slideIndex = 0;
+    var slideIndex = 1;
 
-    automatedShowSlides();
+    //Uncomment this when using automatedShowSlides function
+    // automatedShowSlides();
+
 
     // Next/previous controls
     function plusDivs(n) {
@@ -771,6 +777,9 @@
         slides[slideIndex - 1].style.display = "block";
         dots[slideIndex - 1].className += " active";
     }
+
+    //This function if for automation transition
+    /*
     function automatedShowSlides() {
 
         var i;
@@ -781,7 +790,10 @@
         slideIndex++;
         if (slideIndex > slides.length) { slideIndex = 1 }
         slides[slideIndex - 1].style.display = "block";
-        setTimeout(automatedShowSlides, 2000); // Change image every 2 seconds
+        setTimeout(automatedShowSlides, 1000); // Change image every 2 seconds
     }
+    */
+
+
 </script>
 </html>
