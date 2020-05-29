@@ -192,3 +192,74 @@ INFO:daemons.startstop.simple:Succesfully stopped the process.
 INFO:daemons.daemonize.simple:Succesfully daemonized process 960.
 INFO:daemons.startstop.simple:Beginning run loop for process.
 INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1129.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:The process is already running with pid 1129.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1157.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1273.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1285.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1297.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 850.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 862.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 990.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:The process is already running with pid 990.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1042.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1096.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1096.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1103.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1296.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 2116.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1264.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:The process is already running with pid 1264.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1505.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1799.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1126.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1362.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1553.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+                                                                                                                                 INFO:daemons.daemonize.simple:Succesfully daemonized process 1238.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1473.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1499.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
