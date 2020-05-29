@@ -19,15 +19,16 @@ else:
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-
+#ret, frame = cam.read()
+#time.sleep(10)
 
 while True:
     starttime = time.time()
     ret, frame = cam.read()
 #    print(ret)
-    cv2.imwrite(path + "/" + str(time.time()) + ".jpg", frame)
-    time.sleep(0.05 - ((time.time() - starttime) % 0.05))
+    time.sleep(0.2 - ((time.time() - starttime) % 0.2))
     print(time.time() - starttime)
+    cv2.imwrite(path + "/" + str(time.time()) + ".jpg", frame)
 
 
 

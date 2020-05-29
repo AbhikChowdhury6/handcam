@@ -1,0 +1,194 @@
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21556.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 52, in run
+    timeStamp=round((time.time()-startTime),3)
+NameError: name 'startTime' is not defined
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21591.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 52, in run
+    timeStamp=round((time.time()-startTime),3)
+NameError: name 'startTime' is not defined
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21628.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 52, in run
+    timeStamp=round((time.time()-startTime),3)
+NameError: name 'startTime' is not defined
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21665.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 53, in run
+    timeStamp=round((time.time()-startTime),3)
+NameError: name 'startTime' is not defined
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21731.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 21851.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22055.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:The process is already running with pid 22055.
+ERROR:daemons.startstop.simple:The process is already running with pid 22055.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22234.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22248.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22260.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22359.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22371.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 22850.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26659.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26671.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26815.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26879.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26909.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26957.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26969.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 26985.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 11866.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 28, in run
+    f=open("/home/pi/data/IMU.csv",mode='a')
+FileNotFoundError: [Errno 2] No such file or directory: '/home/pi/data/IMU.csv'
+INFO:daemons.daemonize.simple:Succesfully daemonized process 11978.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 28, in run
+    f=open("/home/pi/data/IMU.csv",mode='a')
+FileNotFoundError: [Errno 2] No such file or directory: '/home/pi/data/IMU.csv'
+INFO:daemons.daemonize.simple:Succesfully daemonized process 11990.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 28, in run
+    f=open("/home/pi/data/IMU.csv",mode='a')
+FileNotFoundError: [Errno 2] No such file or directory: '/home/pi/data/IMU.csv'
+INFO:daemons.daemonize.simple:Succesfully daemonized process 926.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 28, in run
+    f=open("/home/pi/data/IMU.csv",mode='a')
+FileNotFoundError: [Errno 2] No such file or directory: '/home/pi/data/IMU.csv'
+INFO:daemons.daemonize.simple:Succesfully daemonized process 938.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 28, in run
+    f=open("/home/pi/data/IMU.csv",mode='a')
+FileNotFoundError: [Errno 2] No such file or directory: '/home/pi/data/IMU.csv'
+INFO:daemons.daemonize.simple:Succesfully daemonized process 950.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+ERROR:daemons.startstop.simple:Uncaught exception in the daemon run() method.
+Traceback (most recent call last):
+  File "/home/pi/handcam/v4collectionRig/daemons/startstop/simple.py", line 43, in start
+    self.run()
+  File "/home/pi/handcam/v4collectionRig/imuDaemon.py", line 28, in run
+    f=open("/home/pi/data/IMU.csv",mode='a')
+FileNotFoundError: [Errno 2] No such file or directory: '/home/pi/data/IMU.csv'
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1025.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 904.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 934.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 850.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 850.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 854.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 866.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 923.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 881.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 993.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1010.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1065.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 1080.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+                                                               INFO:daemons.daemonize.simple:Succesfully daemonized process 910.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 851.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 863.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 877.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.
+INFO:daemons.daemonize.simple:Succesfully daemonized process 960.
+INFO:daemons.startstop.simple:Beginning run loop for process.
+INFO:daemons.startstop.simple:Succesfully stopped the process.

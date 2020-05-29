@@ -10,7 +10,7 @@ import requests
 from flask import Flask, request, jsonify, render_template
 #from keras.applications import inception_v3
 from keras.preprocessing import image
-from firebase_util import uploadToFirebase
+#from firebase_util import uploadToFirebase
 
 import cv2
 import glob
@@ -149,7 +149,7 @@ def image_classifier():
     print(res)
     frames = res["frames"]
     pred = res["class"]
-    uploadToFirebase(pred, frames)
+    #uploadToFirebase(pred, frames)
 
 
     #####form sqlite entry using the predicted class
