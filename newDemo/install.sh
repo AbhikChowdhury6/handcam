@@ -22,3 +22,12 @@ conda install -c conda-forge opencv
 conda install -c conda-forge matplotlib
 
 conda install -c anaconda pillow
+
+
+#for pi
+install opencv
+
+sudo pip3 install adafruit-circuitpython-bno055
+
+sudo apt install python3-gpiozero
+

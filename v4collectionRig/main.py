@@ -54,6 +54,11 @@ import board
 import neopixel
 import os
 import RPi.GPIO as GPIO   
+import logging
+
+# mlogfile = os.path.join(os.getcwd(), "main.log")
+# logging.basicConfig(filename=mlogfile, level=logging.DEBUG)
+
 
 GPIO.setmode(GPIO.BCM)           # Set's GPIO pins to BCM GPIO numbering
 INPUT_PIN = 4          
@@ -138,7 +143,7 @@ while(True):
         time.sleep(2)
         
         #zip the folder and put it on the USB
-        os.system("zip -r /media/pi/" + usbName[0] + "/" + ".zip /home/pi/data")
+        os.system("cd /home/pi/ && zip -r /media/pi/" + usbName[0] + "/" + str(time.time()) + ".zip data")
         
         #remove old data
         os.system("rm /home/pi/data/*.jpg")
@@ -147,6 +152,12 @@ while(True):
         transfered = True
         green = statBrightness
         red = 0
+
+        #TODO reset recording number to zero
+        vidNF = open( "/home/pi/vidnum.txt", "w")
+        vidNF.write("0")
+        vidNF.close()
+
         print("finished Transfer")
 
 

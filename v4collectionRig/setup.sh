@@ -30,14 +30,38 @@ sudo apt-get install -y libatlas-base-dev
 sudo pip3 install opencv-contrib-python==3.4.3.18
 
 
+apt-get install -y mlocate
+updatedb
+
+
+
+apt-get install -y octave
+apt-get update
+apt-get install -y octave
+
 sudo apt-get install -y cmake
 sudo apt-get install -y qt4-default
+
+cd /home/pi
 git clone https://github.com/RPi-Distro/RTIMULib/ RTIMU
-cd RTIMU/Linux/python
-python3 setup.py build
-python3 setup.py install
+
+cd /home/pi/RTIMU/Linux/python
+python3 /home/pi/RTIMU/Linux/python/setup.py build
+python3 /home/pi/RTIMU/Linux/python/setup.py install
+
+cd /home/pi/RTIMU/Linux/RTIMULibCal
+make
+make install
+
+cd /home/pi/RTIMU/RTEllipsoidFit
+RTIMULibCal
+mv RTIMULib.ini /home/pi/
+
 cd ~
 
-mkdir data
 
-echo "python3 /home/pi/handcam/v4collectionRig/main.py" >> /etc/rc.local
+mkdir /home/pi/data
+mkdir /media/pi
+echo "0" >> /home/pi/vidnum.txt
+
+echo "cd /home/pi/handcam/v4collectionRig/ && python3 main.py &"

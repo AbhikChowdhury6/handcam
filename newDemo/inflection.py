@@ -176,7 +176,7 @@ while True:
 		inflection = find_inf_pt(accLP, gyrLP, eps=EPS)
 		if inflection:
 			print("Inflection point at {}".format(time.time()))
-			send_frames(frame_buffer.pull(report_points))
+			send_frames(frame_buffer.list[-10:])
 			#os.system("python3 sendLastn.py " + url + " " + lastN)
 			# if this introduces a lag, these can be invoked
 #			time.sleep(2)
