@@ -1,0 +1,452 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12"></div>
+    <div class="col-md-12">
+    <div class="content-section">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='timeline.css') }}">
+
+    <div class="container text-center">
+        <section class="section intro">
+          <div class="container">
+            <h2>Select event from the Timeline</h2>
+          </div>
+        </section>
+        <section class="timeline">
+            <ol>
+                
+                    {% for key in timedata %}
+                    <li>
+                        <form method="POST" id="{{key}}" action="/round1Data/{{fileId}}">
+                            <div style="height: 50px;">
+                                <button > 
+                                    <!-- onclick="return foo('{{key}}','{{timedata[key]}}');return false;" -->
+                                    <input type="submit"  name="time" value={{timedata[key]}}({{key}}) class="button" style="color: brown;"></input>
+                                    
+                                </button>
+                                
+                            </div>
+                        </form>
+                    </li>
+                    {% endfor %}
+                    <li></li>
+            </ol>
+
+            <div class="arrows">
+                <button class="arrow arrow__prev disabled" disabled>
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/arrow_prev.svg"
+                         alt="prev timeline arrow" />
+                </button>
+                <button class="arrow arrow__next">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/arrow_next.svg"
+                         alt="next timeline arrow" />
+                </button>
+            </div>
+        </section>
+
+        <br /><br />
+        <!-- <div class="btn">Display</div> -->
+        <br /><br />
+        <label for="actions">Choose an action:</label>
+
+        <select id="actions" class="btn">
+            <option value="Preset">Pre-Set</option>
+            <option value="Empty">Empty</option>
+        </select>
+
+        <input id="setAct" name="setAction" type="button" value="Set Action" class="btn" style="background-color: steelblue;">
+
+        <br>
+        <br>
+
+        <!-- <form method="POST" action="/"> -->
+            <div class="slideshow-container">
+
+                <!-- Full-width images with number and caption text -->
+                {% for imagedata in imagedata %}
+
+                <div class="mySlides">
+                    <div class="numbertext" style="background: black;">{{loop.index}} / {{loop.length}}</div>
+                    <img src="{{ url_for('static', filename= imagedata ) }}"  style="width:50%">
+                    <!--<div class="text">Caption Text</div>-->
+                </div>
+                {% endfor %}
+                <br />
+
+                <!-- Next and previous buttons -->
+                <a class="prev"  style="color: gray;" onclick="plusDivs(-1)">&#10094; Prev</a>
+                <a class="next" style="color: gray;" onclick="plusDivs(+1)">Next &#10095;</a>
+            </div>
+            <br />
+
+            <!-- The dots/circles -->
+
+            <div style="text-align:center">
+                {% for imagedata in imagedata %}
+                <span class="dot" onclick="currentSlide({{loop.index}})"></span>
+                {% endfor %}
+            </div>
+
+            <br>
+
+            <!-- To display the set tags for round-1-->
+            <div style="float: center;text-align: center;background-color: gray;">
+                <table class="table table-bordered" >
+                    <thead style="background-color:slategray;">
+                        <td> <strong> Image Name </strong> </td>
+                        <td> <strong> Image Tag </strong> </td>
+                    </thead>
+                    <tbody id="setActTable"> </tbody>
+                </table>
+                
+            </div>
+            <!--
+                        <div class="row">
+                            imagedata is array images
+                    {% for imagedata in imagedata %}
+                        col-md-_ gives different view on website for images
+                    <div class="col-md-1 nopad">
+                        <label class="image-checkbox">
+                            <input type="checkbox" name="images" value="{{imagedata}}" id="id3" />
+                            <label for="id3">
+                                <img src="{{imagedata}}" class="img-fluid" />
+                            </label>
+                        </label>
+                    </div>
+                    {% endfor %}
+            </div>
+            -->
+            <br />
+            <!-- <form method="POST" action="/upload"> -->
+                <div class="btn">
+                    <!-- <form method="POST" action="/round1Delete/{{fileId}}"> -->
+                       <button id= "delButton" class="btn" type="submit">
+                           Delete
+                       </button>
+           
+                   <!-- </form> -->
+               </div>
+            <br />
+            <br />
+
+                <div class="btn">
+                    <!--  <form method="POST" action="/round1Submit/{{fileId}}"> -->
+                        <button id= "tround3" class="btn" type="submit">
+                            Submit
+                        </button>
+                    <!-- </form> -->
+                </div>
+            <br />
+            <br />
+            
+        <!-- </form> -->
+    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js'></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='timeline.js') }}"></script>
+  </div>
+   <div class="modal fade" id="play-video-1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button onclick="myFunction1()" type="button">Note time</button>
+                <div class="modal-body">
+                    <video id="myVideo1" width="100%" controls>
+                        <source src="images/vid1.mp4" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="play-video-2">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button onclick="myFunction2()" type="button">Note time</button>
+                <div class="modal-body">
+                    <video id="myVideo2" width="100%" controls>
+                        <source src="images/vid2.mp4" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="play-video-3">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button onclick="myFunction3()" type="button">Note time</button>
+                <div class="modal-body">
+                    <video id="myVideo3" width="100%" controls>
+                        <source src="images/vid3.mp4" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>
+
+    // image gallery
+    // init the state from the input
+    $(".image-checkbox").each(function () {
+        if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
+            $(this).addClass('image-checkbox-checked');
+            console.log($(".image-checkbox-checked"));
+        }
+        else {
+            $(this).removeClass('image-checkbox-checked');
+        }
+    });
+
+    // sync the state to the input
+    $(".image-checkbox").on("click", function (e) {
+        $(this).toggleClass('image-checkbox-checked');
+        var $checkbox = $(this).find('input[type="checkbox"]');
+        $checkbox.prop("checked", !$checkbox.prop("checked"));
+        e.preventDefault();
+    });
+
+</script>
+
+<script>
+    var duration1 = 0;
+    var duration2 = 0
+    var duration3 = 0;
+    var vid1 = document.getElementById("myVideo1");
+    var vid2 = document.getElementById("myVideo2");
+    var vid3 = document.getElementById("myVideo3");
+    function myFunction1() {
+        duration1 = duration1 + " , " + vid1.currentTime;
+        alert(" Point1: " + duration1);
+    }
+    function myFunction2() {
+        duration2 = duration2 + " , " + vid2.currentTime;
+        alert(" Point2: " + duration2);
+    }
+    function myFunction3() {
+        duration3 = duration3 + " , " + vid3.currentTime;
+        alert(" Point3: " + duration3);
+    }
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    var slideIndex = 1;
+    var currentIndex=-1;
+    var storeTags = {};
+    //Uncomment this when using automatedShowSlides function
+    // automatedShowSlides();
+
+
+    // Next/previous controls
+    function plusDivs(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        currentIndex=slideIndex-1;
+        dots[slideIndex - 1].className += " active";
+    }
+
+    //This function if for automation transition
+    /*
+    function automatedShowSlides() {
+
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }
+        slides[slideIndex - 1].style.display = "block";
+        setTimeout(automatedShowSlides, 1000); // Change image every 2 seconds
+    }
+    */
+    
+    
+    $(function() {
+    $('#tdel').click(function() {
+        $.ajax({
+            url: '/upload',
+            data: {"delete":"Delete Selected"},
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+                window.location.reload();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+        });
+    });
+
+    // $(function() {
+    // $('#tround3').click(function() {
+    //     // console.log("adsd");
+    //     // window.location.href = "/Round-3";
+    //     console.log(JSON.stringify({"tagData":storeTags}));
+    //     var val = JSON.stringify({"tagData":storeTags});
+    //     $.ajax({
+    //         url: '/Round-3',
+    //         data: {"val":val},
+    //         type: 'POST',
+    //         success: function(response) {
+    //             console.log(response);
+    //             //window.location.reload();
+    //             if(response == "success"){
+    //                 window.location.href = "/Round-3";
+    //             }
+    //             else{
+    //                 alert(response);
+    //             }
+                
+    //         },
+    //         error: function(error) {
+    //             console.log(error);
+    //         }
+    //     });
+    //     });
+    // });
+
+    $(function() {
+    $('#setAct').click(function() {
+            if(currentIndex!=-1){
+                for(var lt in storeTags){
+                    document.getElementById("setActTable").deleteRow(0);
+                }
+                var dots = document.getElementsByClassName("dot");
+                var slides = document.getElementsByClassName("mySlides");
+                imagename = slides[currentIndex].lastElementChild.src.split("/")
+                iml = imagename[imagename.length-1]
+
+
+
+                var e = document.getElementById("actions");
+                var actionValue = e.options[e.selectedIndex].value;
+                // alert(currentIndex);
+                // alert(actionValue);
+                if(actionValue == "Preset"){
+                    dots[currentIndex].style.background="green";
+                }
+                else if(actionValue == "Empty"){
+                    dots[currentIndex].style.background="blue";
+                }
+                storeTags[iml] = actionValue;
+                console.log(String(iml) + " : " + actionValue);
+
+                
+
+                var tbl = document.getElementById("setActTable");
+               
+                for(var lt in storeTags){
+                    var row = tbl.insertRow(0);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = lt;
+                    cell2.innerHTML = storeTags[lt];
+                }
+            }
+            else{
+                alert("Please select an image frame.");
+            }
+            
+        });
+    });
+
+    $(function() {
+    $('#delButton').click(function() {
+        if(currentIndex!=-1){
+            var dots = document.getElementsByClassName("dot");
+            var slides = document.getElementsByClassName("mySlides");
+            var imagename = slides[currentIndex].lastElementChild.src;
+            // iml = imagename[imagename.length-1]
+            var frameNo = (imagename.split('-')[1]).split('.jpg')[0]
+            // alert(frameNo);
+            $.ajax({
+                url: '/round1Delete/{{fileId}}',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({"frameNo":frameNo}),
+                type: 'POST',
+                success: function(response) {
+                    var res = JSON.parse(response);
+                    
+                    if(res.flag == "success"){
+                        window.location.href = "/round1/" + res.fileId ;
+                    }
+                    else{
+                        alert("Error occured in deleting the frame.");
+                        window.location.href = "/round1/" + res.fileId ;
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        else{
+            alert("Image not selected to delete.");
+        }
+        });
+    });
+
+    $(function() {
+    $('#tround3').click(function() {
+        // if(currentIndex!=-1){
+            
+            // alert(frameNo);
+            $.ajax({
+                url: '/round1Submit/{{fileId}}',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({"tagData":storeTags}),
+                type: 'POST',
+                success: function(response) {
+                    var res = JSON.parse(response);
+                    
+                    if(res.flag == "success"){
+                        window.location.href = "/";
+                    }
+                    else{
+                        alert("Error occured in Submit the data.");
+                        window.location.href = "/";
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        //}
+        
+        });
+    });
+
+    
+
+    function foo(value,key){
+        $("'#"+value+"'").submit(function(e){
+            e.preventDefault();
+        });
+        alert(value);
+    }
+</script>
+    </div>
+    </div>
+</div>
+{% endblock content %}
