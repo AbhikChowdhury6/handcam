@@ -17,15 +17,17 @@ global result
 @main.route("/",methods=['GET','POST'])
 @login_required
 def home():
-	if current_user.is_authenticated:
+	if current_user.is_authenticated and current_user.isAnnotator==0:
 		rigData = rigDeviceData.query.filter_by(user_id=current_user.id).order_by(rigDeviceData.uploaded_at.desc())
-	return render_template('home.html',rigData=rigData,user=current_user)
+		return render_template('home.html',rigData=rigData,user=current_user)
+	elif current_user.is_authenticated and current_user.isAnnotator==1:
+		return redirect(url_for('annotator.home'))
 
 @main.route("/upload", methods=['GET','POST'])
 @login_required
 def upload():
 	global result
-	if current_user.is_authenticated:
+	if current_user.is_authenticated and current_user.isAnnotator==0:
 		if request.method == 'POST':
 
 			if 'file' not in request.files:
@@ -66,6 +68,8 @@ def upload():
 					rigData = rigDeviceData(filename=filename, filePath= str(filePath), fileContent=json.dumps(finalResult),user_id=current_user.id)
 					db.session.add(rigData)
 					db.session.commit()
+					filePath = curr_app.root_path + (rigData.filePath).split(".zip")[0]
+					apply_imageStabilization(filePath)
 					print("File uploaded successfully")
 					flash('File uploaded successfully.','success')
 					return redirect(url_for('main.roundOne',fileId = rigData.id))
@@ -77,7 +81,7 @@ def upload():
 @main.route("/round1/<fileId>", methods=['GET','POST'])
 @login_required
 def roundOne(fileId):
-	if current_user.is_authenticated:
+	if current_user.is_authenticated and current_user.isAnnotator==0:
 		imagedata = []
 		timedata = []
 		rigValue =  rigDeviceData.query.filter_by(id=fileId,user_id=current_user.id).first_or_404()
@@ -95,7 +99,7 @@ def roundOne(fileId):
 @login_required
 def roundOneData(fileId):
 	print("RoundOne data code is running...")
-	if current_user.is_authenticated:
+	if current_user.is_authenticated and current_user.isAnnotator==0:
 		if request.method == 'POST':
 			formTime = request.form['time']
 			print(formTime)
@@ -127,7 +131,7 @@ def roundOneData(fileId):
 @login_required
 def roundOneDelete(fileId):
 	print("Delete button is pressed.")
-	if current_user.is_authenticated:
+	if current_user.is_authenticated and current_user.isAnnotator==0:
 		if request.method == 'POST':
 			data = request.json['frameNo']
 
@@ -163,19 +167,51 @@ def roundOneDelete(fileId):
 	else:
 		return redirect(url_for('users.login'))
 
+@main.route("/round1Save/<fileId>", methods=['GET', 'POST'])
+@login_required
+def roundOneSave(fileId):
+	if current_user.is_authenticated and current_user.isAnnotator==0:
+		if request.method == 'POST':
+			data = (request.json['tagData'])
+			for value in data:
+					print(value)
+			rigValue =  rigDeviceData.query.filter_by(id=fileId,user_id=current_user.id).first_or_404()
+			print(rigValue.contextualTag)
+			if rigValue.contextualTag != None and rigValue.contextualTag!="null":
+				tags = json.loads(rigValue.contextualTag)
+				print("already present : ")
+				print(tags)
+				for value in data:
+					tags[value] = data[value]
+
+				rigValue.contextualTag = json.dumps(tags)	
+			else:
+				tags = {}
+				for value in data:
+					tags[value] = data[value]
+				rigValue.contextualTag = json.dumps(tags)
+			db.session.add(rigValue)
+			db.session.commit()
+			return json.dumps({'fileId':fileId,'flag':'success'})
+			
+	else:
+		return redirect(url_for('users.login'))
+
+
 @main.route("/round1Submit/<fileId>", methods=['GET', 'POST'])
 @login_required
 def roundOneSubmit(fileId):
-	if current_user.is_authenticated:
+	if current_user.is_authenticated and current_user.isAnnotator==0:
 		if request.method == 'POST':
-			data = (request.json['tagData'])
-			print(data)
 			
 			rigValue =  rigDeviceData.query.filter_by(id=fileId,user_id=current_user.id).first_or_404()
 			filePath = curr_app.root_path + (rigValue.filePath).split(".zip")[0]
-			apply_imageStabilization(filePath)
+			data = json.loads(rigValue.contextualTag)
 			apply_thresholdAlgo( filePath)
-			AddingtoCSV( filePath, data)
+			AddingtoCSV(filePath, data)
+			rigValue.status=1
+			db.session.add(rigValue)
+			db.session.commit()
 			return json.dumps({'fileId':fileId,'flag':'success'})
 			
 	else:

@@ -34,6 +34,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     rigName = db.Column(db.String(120), unique=True, nullable=False)
     rigdevicedatas = db.relationship('rigDeviceData', backref='user', lazy=True)
+    isAnnotator = db.Column(db.Integer, default=0)
     
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -86,6 +87,7 @@ class rigDeviceData(db.Model):
     filename = db.Column(db.String(256), nullable=False)
     filePath = db.Column(db.Text)
     fileContent = db.Column(JSON)
+    contextualTag = db.Column(JSON)
     uploaded_at = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
     status = db.Column(db.Integer,default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)

@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "annotator/layout1.html" %}
 {% block content %}
 <div class="row">
 	<div class="col-md-12"></div>
@@ -20,9 +20,9 @@
         	{% for value in rigData %}
             <tr>
                 <td>{{user.rigName}}</td>
-                {% if value.status == 0 %}
-                    <td><a href="{{ url_for('main.roundOne', fileId=value.id) }}" >{{value.filename}}</a></td>
-                {% elif value.status == 1 %}
+                {% if value.status == 1 %}
+                    <td><a href="{{ url_for('annotator.roundThree', fileId=value.id) }}" >{{value.filename}}</a></td>
+                {% elif value.status == 0 %}
                     <td><p>{{value.filename}}</p></td>
                 {% endif %}
                 <td>{{value.filePath}}</td>

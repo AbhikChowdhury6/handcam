@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "annotator/layout1.html" %}
 {% block content %}
 <div class="row">
     <div class="col-md-12"></div>
@@ -18,7 +18,7 @@
                 
                     {% for key in timedata %}
                     <li>
-                        <form method="POST" id="{{key}}" action="/round1Data/{{fileId}}">
+                        <form method="POST" id="{{key}}" action="/round3Data/{{fileId}}">
                             <div style="height: 50px;">
                                 <button > 
                                     <!-- onclick="return foo('{{key}}','{{timedata[key]}}');return false;" -->
@@ -47,17 +47,27 @@
 
         <br /><br />
         <!-- <div class="btn">Display</div> -->
-        <br /><br />
-        <label for="actions">Choose an action:</label>
+        {% if isgrasping!=0 %}
+           <p style="color: black" > <strong> isgrasping :  </strong>{{isgrasping}} </p>
+        {% else %}
+            <p style="color: black" > <strong> isgrasping :  </strong>0 </p>
+        {% endif %}
+        <!-- <br /><br /> -->
+
+        <label for="actions" style="color: black" >Choose an action:</label>
 
         <select id="actions" class="btn">
-            <option value="Preset">Pre-Set</option>
-            <option value="Empty">Empty</option>
+            <option value="t1">t1</option>
+            <option value="t2">t2</option>
+            <option value="t3">t3</option>
+            <option value="t4">t4</option>
+            <option value="t5">t5</option>
         </select>
 
         <input id="setAct" name="setAction" type="button" value="Set Action" class="btn" style="background-color: steelblue;">
 
-        <br/><br/>
+        <br>
+        <br>
 
         <!-- <form method="POST" action="/"> -->
             <div class="slideshow-container">
@@ -94,7 +104,7 @@
                 <table class="table table-bordered" >
                     <thead style="background-color:slategray;">
                         <td> <strong> Image Name </strong> </td>
-                        <td> <strong> Contextual Tag </strong> </td>
+                        <td> <strong> Image Tag </strong> </td>
                     </thead>
                     <tbody id="setActTable"> </tbody>
                 </table>
@@ -116,29 +126,6 @@
                     {% endfor %}
             </div>
             -->
-            <br />
-            <!-- <form method="POST" action="/upload"> -->
-                <div class="btn">
-                    <!-- <form method="POST" action="/round1Delete/{{fileId}}"> -->
-                       <button id= "saveButton" class="btn" type="submit">
-                           Save
-                       </button>
-           
-                   <!-- </form> -->
-               </div>
-            <br />
-
-            <br />
-            <!-- <form method="POST" action="/upload"> -->
-                <div class="btn">
-                    <!-- <form method="POST" action="/round1Delete/{{fileId}}"> -->
-                       <button id= "delButton" class="btn" type="submit">
-                           Delete
-                       </button>
-           
-                   <!-- </form> -->
-               </div>
-            <br />
             <br />
 
                 <div class="btn">
@@ -195,7 +182,6 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
 
     // image gallery
@@ -218,7 +204,9 @@
         e.preventDefault();
     });
 
+</script>
 
+<script>
     var duration1 = 0;
     var duration2 = 0
     var duration3 = 0;
@@ -237,62 +225,24 @@
         duration3 = duration3 + " , " + vid3.currentTime;
         alert(" Point3: " + duration3);
     }
-
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
     var slideIndex = 1;
     var currentIndex=-1;
     var storeTags = {};
-
-    var setRangeTags = [];
     //Uncomment this when using automatedShowSlides function
     // automatedShowSlides();
 
 
     // Next/previous controls
     function plusDivs(n) {
-        let vals = showSlides(slideIndex += n);
+        showSlides(slideIndex += n);
     }
-    
-    
+
     // Thumbnail image controls
     function currentSlide(n) {
-        let vals = showSlides(slideIndex = n);
-
-        if(setRangeTags.length  == 0){
-            if(vals == true){
-                let result = confirm("Do you want to continue to do range selecton?");
-                if(result == true){
-                    setRangeTags.push(n);
-                }
-                else{
-                    setRangeTags = [];
-                }
-            }
-        }
-        else if(setRangeTags.length == 1){
-            if(vals == true){
-                setRangeTags.push(n);
-                if(setRangeTags.length == 2){
-                    if(setRangeTags[0] <= setRangeTags[1]){
-                        alert(" range set done.");
-                        var dots = document.getElementsByClassName("dot");
-                        for(var j=setRangeTags[0];j<setRangeTags[1];j++){
-                            dots[j].style.background="yellow";
-                        }
-                    }
-                    else{
-                        alert(" please select range in order.");
-                        setRangeTags = [];
-                    }
-                }
-            }
-        }
-        else{
-            let result = confirm("Do you want to set a tag?");
-            if(result == false){
-                storeTags = [];
-            }
-        }
-        
+        showSlides(slideIndex = n);
     }
 
     function showSlides(n) {
@@ -310,7 +260,6 @@
         slides[slideIndex - 1].style.display = "block";
         currentIndex=slideIndex-1;
         dots[slideIndex - 1].className += " active";
-        return true;
     }
 
     //This function if for automation transition
@@ -328,14 +277,6 @@
         setTimeout(automatedShowSlides, 1000); // Change image every 2 seconds
     }
     */
-    
-    function myFunctionitem(value){
-        var ltt = document.getElementById(value);
-        storeTags[value] = ltt.value;
-        ltt.disabled = true;
-    }
-   
-
 
     $(function() {
     $('#setAct').click(function() {
@@ -347,33 +288,32 @@
                 var slides = document.getElementsByClassName("mySlides");
                 imagename = slides[currentIndex].lastElementChild.src.split("/")
                 iml = imagename[imagename.length-1]
-                
+
+
 
                 var e = document.getElementById("actions");
                 var actionValue = e.options[e.selectedIndex].value;
                 // alert(currentIndex);
                 // alert(actionValue);
-                if(actionValue == "Preset"){
+                if(actionValue == "t1"){
                     dots[currentIndex].style.background="green";
                 }
-                else if(actionValue == "Empty"){
+                else if(actionValue == "t2"){
                     dots[currentIndex].style.background="blue";
                 }
+                else if(actionValue == "t3"){
+                    dots[currentIndex].style.background="yellow";
+                }
+                else if(actionValue == "t4"){
+                    dots[currentIndex].style.background="red";
+                }
+                else if(actionValue == "t5"){
+                    dots[currentIndex].style.background="orange";
+                }
                 storeTags[iml] = actionValue;
+                console.log(String(iml) + " : " + actionValue);
 
                 
-                for(var j=setRangeTags[0];j<setRangeTags[1];j++){
-                    let tt = slides[j].lastElementChild.src.split("/")
-                    storeTags[tt[tt.length-1]] = actionValue;
-                    if(actionValue == "Preset"){
-                        dots[j].style.background="green";
-                    }
-                    else if(actionValue == "Empty"){
-                        dots[j].style.background="blue";
-                    }
-                }
-                setRangeTags=[];
-                console.log(String(iml) + " : " + actionValue);
 
                 var tbl = document.getElementById("setActTable");
                
@@ -382,55 +322,13 @@
                     var cell1 = row.insertCell(0);
                     var cell2 = row.insertCell(1);
                     cell1.innerHTML = lt;
-                    if(storeTags[lt] == "Empty"){
-                        cell2.innerHTML = '<input id="'+lt+'"value="'+storeTags[lt] +'"><p class="button" onclick="myFunctionitem(\''+lt+'\')">save</p>';
-                    }
-                    else{
-                        cell2.innerHTML = storeTags[lt];
-                    }
-                    
+                    cell2.innerHTML = storeTags[lt];
                 }
             }
             else{
                 alert("Please select an image frame.");
             }
             
-        });
-    });
-
-    $(function() {
-    $('#delButton').click(function() {
-        if(currentIndex!=-1){
-            var dots = document.getElementsByClassName("dot");
-            var slides = document.getElementsByClassName("mySlides");
-            var imagename = slides[currentIndex].lastElementChild.src;
-            // iml = imagename[imagename.length-1]
-            var frameNo = (imagename.split('-')[1]).split('.jpg')[0]
-            // alert(frameNo);
-            $.ajax({
-                url: '/round1Delete/{{fileId}}',
-                contentType: 'application/json;charset=UTF-8',
-                data: JSON.stringify({"frameNo":frameNo}),
-                type: 'POST',
-                success: function(response) {
-                    var res = JSON.parse(response);
-                    
-                    if(res.flag == "success"){
-                        window.location.href = "/round1/" + res.fileId ;
-                    }
-                    else{
-                        alert("Error occured in deleting the frame.");
-                        window.location.href = "/round1/" + res.fileId ;
-                    }
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-        else{
-            alert("Image not selected to delete.");
-        }
         });
     });
 
@@ -464,56 +362,14 @@
         });
     });
 
-    $(function() {
-        $('#rangeSelection').click(function() {
-            alert("das");
-            
-            });
-    });
-
     
-
-    
-  
-
-    $(function() {
-    $('#saveButton').click(function() {
-            $.ajax({
-                url: '/round1Save/{{fileId}}',
-                contentType: 'application/json;charset=UTF-8',
-                data: JSON.stringify({"tagData":storeTags}),
-                type: 'POST',
-                success: function(response) {
-                    var res = JSON.parse(response);
-                    if(res.flag == "success"){
-                        alert("Contextual tagging for this image frame is successful.")
-                        window.location.reload();
-                    }
-                    else{
-                        alert("Error occured in saving the contextual tag of the image frame.");
-                        window.location.href = "/";
-                    }
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        //}
-        
-        });
-    });
-
-    
-
     function foo(value,key){
         $("'#"+value+"'").submit(function(e){
             e.preventDefault();
         });
         alert(value);
     }
-
 </script>
-
     </div>
     </div>
 </div>

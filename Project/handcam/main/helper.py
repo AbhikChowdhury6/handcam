@@ -35,7 +35,7 @@ def file_upload(folderPath, pathfile,current_user):
     pattern = "*.jpg"
 
     finalResult = {}
-    filePath = 'collectedData/'+ current_user +"/"+ finalFileName +'/data/'
+    filePath = 'collectedData/'+ current_user +"/"+ finalFileName +'/rotated_images/'
     for path, dir, files in os.walk(root):
         for name in files:
             if fnmatch(name, pattern):

@@ -12,7 +12,10 @@ users = Blueprint('users', __name__)
 @users.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        if current_user.isAnnotator==1:
+            return redirect(url_for('annotator.home'))
+        else:
+            return redirect(url_for('main.home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -27,15 +30,21 @@ def register():
 @users.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        if current_user.isAnnotator==1:
+            return redirect(url_for('annotator.home'))
+        else:
+            return redirect(url_for('main.home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            next_page = request.args.get('next')
-            print(next_page)
-            return redirect(next_page) if next_page else redirect(url_for('main.home'))
+            if user.isAnnotator == 1:
+                return redirect(url_for('annotator.home'))
+            else:
+                next_page = request.args.get('next')
+                print(next_page)
+                return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -50,21 +59,25 @@ def logout():
 @users.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
-    form = UpdateAccountForm()
-    if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        current_user.rigName = form.rigname.data
-        db.session.commit()
-        flash('Your account has been updated!', 'success')
-        return redirect(url_for('users.account'))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-        form.rigname.data = current_user.rigName
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account',
-                           image_file=image_file, form=form)
+    if current_user.is_authenticated and current_user.isAnnotator==0:
+        form = UpdateAccountForm()
+        if form.validate_on_submit():
+            current_user.username = form.username.data
+            current_user.email = form.email.data
+            current_user.rigName = form.rigname.data
+            db.session.commit()
+            flash('Your account has been updated!', 'success')
+            return redirect(url_for('users.account'))
+        elif request.method == 'GET':
+            form.username.data = current_user.username
+            form.email.data = current_user.email
+            form.rigname.data = current_user.rigName
+        image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+        return render_template('account.html', title='Account',
+                            image_file=image_file, form=form)
+    else:
+        return "404 Error"
+
 
 
 

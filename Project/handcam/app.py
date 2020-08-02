@@ -24,9 +24,10 @@ def create_app(config_class=Config):
     register_extensions(app)
     from handcam.users.routes import users
     from handcam.main.routes import main
+    from handcam.annotator.routes import annotator
     app.register_blueprint(users)
     app.register_blueprint(main)
-
+    app.register_blueprint(annotator)
     return app
 
 def register_extensions(app):
