@@ -4,6 +4,8 @@ sudo apt-get upgrade -y
 
 sudo apt-get install -y zip python3-pip i2c-tools python3-dev
 
+sudo apt install -y exfat-fuse
+sudo apt install -y ntfs-3g
 
 sudo pip3 install rpi_ws281x adafruit-circuitpython-neopixel
 

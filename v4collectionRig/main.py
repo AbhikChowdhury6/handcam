@@ -142,18 +142,27 @@ while(True):
             os.system("python3 imuController.py stop")
         time.sleep(2)
         
-        #zip the folder and put it on the USB
-        os.system("cd /home/pi/ && zip -r /media/pi/" + usbName[0] + "/" + str(time.time()) + ".zip data")
+        #make all files if theyre not already there
+        os.system("mkdir /home/pi/export && mkdir /home/pi/export2 && /home/pi/export3")
+
+        #move old export2 file to export3 and delete
+        os.system("mv /home/pi/export2 /home/pi/export3 && rm -r /home/pi/export3")
+
+        #move old export file to export2 for safe keeping
+        os.system("mv /home/pi/export /home/pi/export2")
         
-        #remove old data
-        os.system("rm /home/pi/data/*.jpg")
-        os.system("rm /home/pi/data/*.csv")
+        #move the data folder to export and make a new data folder for next time
+        os.system("mv /home/pi/data /home/pi/export && mkdir /home/pi/data")
+
+        #zip the export folerfolder and put it on the USB
+        os.system("cd /home/pi/ && zip -r /media/pi/" + usbName[0] + "/" + str(time.time()) + ".zip export")
+        
 
         transfered = True
         green = statBrightness
         red = 0
 
-        #TODO reset recording number to zero
+        #reset recording number to zero
         vidNF = open( "/home/pi/vidnum.txt", "w")
         vidNF.write("0")
         vidNF.close()
