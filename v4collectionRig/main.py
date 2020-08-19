@@ -146,7 +146,7 @@ while(True):
         os.system("mkdir /home/pi/export && mkdir /home/pi/export2 && /home/pi/export3")
 
         #move old export2 file to export3 and delete
-        os.system("rm -r /home/pi/export3/* && mv /home/pi/export2/* /home/pi/export3/*")
+        os.system("rm -r /home/pi/export3/* && mv /home/pi/export2/* /home/pi/export3/")
 
         #move old export file to export2 for safe keeping
         os.system("mv /home/pi/export/* /home/pi/export2")
@@ -156,6 +156,8 @@ while(True):
 
         #zip the export folerfolder and put it on the USB
         os.system("cp /home/pi/export/* /media/pi/" + usbName[0] + "/")
+
+        os.system("eject /dev/sda1")
         
 
         transfered = True
