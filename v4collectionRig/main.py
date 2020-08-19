@@ -152,7 +152,7 @@ while(True):
         os.system("mv /home/pi/export /home/pi/export2")
         
         #move the data folder to export and make a new data folder for next time
-        os.system("cd /home/pi/ && zip -r /home/pi/export/" + str(time.time()) + ".zip data" 
+        os.system("cd /home/pi/ && zip -r /home/pi/export/" + str(time.time()) + ".zip data")
 
         #zip the export folerfolder and put it on the USB
         os.system("cp /home/pi/export/* /media/pi/" + usbName[0] + "/")
