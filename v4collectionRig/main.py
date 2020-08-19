@@ -146,10 +146,10 @@ while(True):
         os.system("mkdir /home/pi/export && mkdir /home/pi/export2 && /home/pi/export3")
 
         #move old export2 file to export3 and delete
-        os.system("rm -r /home/pi/export3 && mv /home/pi/export2 /home/pi/export3")
+        os.system("rm -r /home/pi/export3/* && mv /home/pi/export2/* /home/pi/export3/*")
 
         #move old export file to export2 for safe keeping
-        os.system("mv /home/pi/export /home/pi/export2")
+        os.system("mv /home/pi/export/* /home/pi/export2")
         
         #move the data folder to export and make a new data folder for next time
         os.system("cd /home/pi/ && zip -r /home/pi/export/" + str(time.time()) + ".zip data")
