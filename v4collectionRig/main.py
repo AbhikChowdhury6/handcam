@@ -154,6 +154,9 @@ while(True):
         #move the data folder to export and make a new data folder for next time
         os.system("cd /home/pi/ && zip -r /home/pi/export/" + str(time.time()) + ".zip data")
 
+        #remove items in the data folder
+        os.system("rm -r /home/pi/data/ && mkdir /home/pi/data")
+
         #zip the export folerfolder and put it on the USB
         os.system("cp /home/pi/export/* /media/pi/" + usbName[0] + "/")
 
