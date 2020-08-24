@@ -152,7 +152,9 @@ while(True):
         os.system("mv /home/pi/export/* /home/pi/export2")
         
         #move the data folder to export and make a new data folder for next time
-        os.system("cd /home/pi/ && zip -r /home/pi/export/" + str(time.time()) + ".zip data")
+        t = str(time.time()).split(".")
+        t[1] = t[1] + "000"
+        os.system("cd /home/pi/ && zip -r /home/pi/export/" + t[0] + "." + t[1][:3] + ".zip data")
 
         #remove items in the data folder
         os.system("rm -r /home/pi/data/ && mkdir /home/pi/data")

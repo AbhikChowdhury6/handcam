@@ -28,6 +28,8 @@ class VidDaemon(run.RunDaemon):
             lastTime = time.time()
             ret, frame = cam.read()
             if(ret):
-                cv2.imwrite("/home/pi/data/" + str(time.time()) + "-" + str(vidNum) +".jpg", frame)
+                t = str(time.time()).split(".")
+                t[1] = t[1] + "000"
+                cv2.imwrite("/home/pi/data/" + t[0] + "." + t[1][:3] + "-" + str(vidNum) +".jpg", frame)
             #print(time.time()-lastTime)
 
