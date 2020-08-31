@@ -2,12 +2,12 @@ import os
 
 
 class Config:
-    SECRET_KEY = "dasdasdsadasds"
-    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/handcam'
+    SECRET_KEY = "new_secret_key"
+    SQLALCHEMY_DATABASE_URI = 'postgresql:///handcam'
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    # email = "alukaraj2894@gmail.com"
+    # email = ""
     # password = ""
     # MAIL_USERNAME = email
     # MAIL_PASSWORD = password

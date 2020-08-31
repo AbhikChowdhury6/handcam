@@ -403,9 +403,14 @@
         if(currentIndex!=-1){
             var dots = document.getElementsByClassName("dot");
             var slides = document.getElementsByClassName("mySlides");
+            console.log(currentIndex);
             var imagename = slides[currentIndex].lastElementChild.src;
+            console.log(imagename);
             // iml = imagename[imagename.length-1]
-            var frameNo = (imagename.split('-')[1]).split('.jpg')[0]
+            var timagename = imagename.split("/");
+            var t1imagename = timagename[timagename.length-1].split(".jpg")[0];
+            var t2imagename = t1imagename.split("-")[1];
+            var frameNo = t2imagename;
             // alert(frameNo);
             $.ajax({
                 url: '/round1Delete/{{fileId}}',

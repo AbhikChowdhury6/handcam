@@ -1,2 +1,2 @@
-source ~/asu/dt/env/proj1/bin/activate
+source /home/ubuntu/env/bin/activate
 python run.py

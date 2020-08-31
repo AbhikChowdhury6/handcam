@@ -23,12 +23,31 @@ def file_upload(folderPath, pathfile,current_user):
     pathfilename = secure_filename(pathfile.filename)
     finalFileName = pathfilename.split(".")[0]
     root = folderPath +"/"+finalFileName
-    zip = zipfile.ZipFile(pathfile)
-    zip.extractall(folderPath +'/tmp/' + finalFileName)
-    extracted_path = folderPath+'/tmp/' + finalFileName
-    copy_tree(extracted_path + "/home/pi/", root)
-    ## Deleting the extracted files from the temp folder
-    shutil.rmtree(folderPath+'/tmp')
+    zipPath = zipfile.ZipFile(pathfile, 'r')
+
+    print("Root: " + root)
+
+    if not os.path.exists(root + "/data"):
+        os.makedirs(root + "/data")
+
+    if not os.path.exists(root + "/tmp"):
+        os.makedirs(root + "/tmp")
+    
+    zipFileList = zipPath.namelist()
+    for value in zipFileList:
+        if value.endswith('.csv') or value.endswith('.jpg'):
+           zipPath.extract(value, root + "/tmp")
+           shutil.move(root+"/tmp/"+value,root + "/data/"+value.split("/")[-1])
+    
+    shutil.rmtree(root+"/tmp")
+            
+
+    # zip = zipfile.ZipFile(pathfile)
+    # zip.extractall(folderPath +'/tmp/' + finalFileName)
+    # extracted_path = folderPath+'/tmp/' + finalFileName
+    # copy_tree(extracted_path + "/home/pi/", root)
+    # ## Deleting the extracted files from the temp folder
+    # shutil.rmtree(folderPath+'/tmp')
 
     timeFrame = {}
     videonums = {}

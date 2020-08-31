@@ -139,12 +139,14 @@ def roundOneDelete(fileId):
 			result = json.loads(rigValue.fileContent)
 			timedata = result['timeFrame']
 			imagedata = result['videoNum']
-
+			print(timedata)
+			print(data)
 			if data in timedata :
 				del timedata[data]
 			else:
 				return json.dumps({'fileId':rigValue.id,'flag':'error'})
 
+			print(imagedata)
 			if data in imagedata :
 				for value in imagedata[data]:
 					path = curr_app.root_path + '/static/' + value
