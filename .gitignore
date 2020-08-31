@@ -3,6 +3,8 @@ newDemo/inference_graph
 newDemo/data/
 newDemo/serverData/
 demo/inference_graph/
-Project/*.pyc
+Project/__pycache__/*.pyc
+*.pyc
+Project/handcam/__pycache__/*.pyc
 Project/handcam/static/collectedData/*
 Project/env

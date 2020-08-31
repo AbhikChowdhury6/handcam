@@ -13,6 +13,7 @@
                 <!-- <th>FileContent</th> -->
                 <th>Date</th>
                 <th>Status</th>
+                <th>annotator_status</th>
             </tr>
         </thead>
         {% if rigData %}
@@ -20,15 +21,20 @@
             {% for value in rigData %}
             <tr>
                 <td>{{value.user_id}}</td>
-                {% if value.status == 1 %}
-                    <td><a href="{{ url_for('annotator.roundThree', fileId=value.id) }}" >{{value.filename}}</a></td>
-                {% elif value.status == 0 %}
+                {% if value.annotator_status == 0 %}
+                    {% if value.status == 1 %}
+                        <td><a href="{{ url_for('annotator.roundThree', fileId=value.id) }}" >{{value.filename}}</a></td>
+                    {% elif value.status == 0 %}
+                        <td><p>{{value.filename}}</p></td>
+                    {% endif %}
+                {% else %}
                     <td><p>{{value.filename}}</p></td>
                 {% endif %}
                 <td>{{value.filePath}}</td>
                 <!-- <td>{{value.fileContent}}</td> -->
                 <td>{{value.uploaded_at}}</td>
                 <td>{{value.status}}</td>
+                <td>{{value.annotator_status}}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -126,6 +126,15 @@
                     {% endfor %}
             </div>
             -->
+            <div class="btn">
+                <!--  <form method="POST" action="/round1Submit/{{fileId}}"> -->
+                    <button id= "saveButton" class="btn" type="submit">
+                        Save
+                    </button>
+                <!-- </form> -->
+            </div>
+
+            <br />
             <br />
 
                 <div class="btn">
@@ -338,7 +347,7 @@
             
             // alert(frameNo);
             $.ajax({
-                url: '/round1Submit/{{fileId}}',
+                url: '/roundThreeSubmit/{{fileId}}',
                 contentType: 'application/json;charset=UTF-8',
                 data: JSON.stringify({"tagData":storeTags}),
                 type: 'POST',
@@ -346,6 +355,7 @@
                     var res = JSON.parse(response);
                     
                     if(res.flag == "success"){
+                        alert(res.flag);
                         window.location.href = "/";
                     }
                     else{
@@ -361,7 +371,34 @@
         
         });
     });
-
+    
+    
+    $(function() {
+    $('#saveButton').click(function() {
+            $.ajax({
+                url: '/roundThreeSave/{{fileId}}',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({"tagData":storeTags}),
+                type: 'POST',
+                success: function(response) {
+                    var res = JSON.parse(response);
+                    if(res.flag == "success"){
+                        alert("Annotator tagging for this image frame is successful.")
+                        window.location.reload();
+                    }
+                    else{
+                        alert("Error occured in saving the Annotator tag of the image frame.");
+                        window.location.href = "/";
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        //}
+        
+        });
+    });
     
     function foo(value,key){
         $("'#"+value+"'").submit(function(e){

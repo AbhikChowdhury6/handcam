@@ -53,33 +53,6 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 '''
-class userImage(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    imageName = db.Column(db.String(100), nullable=False)
-    imageUrl = db.Column(db.String(1000),nullable=False)
-    imageDate = db.Column(db.DateTime,default=datetime.utcnow)
-    notify = db.Column(db.Boolean,default=False)
-    content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return 'userImage %r %r %r>' % (self.imageName, self.imageUrl, self.notify)
-
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-
-    def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
-'''
-# if __name__ == '__main__':
-#     manager.run()
-
-'''
 1 to Many relationship with user Table.
 '''
 class rigDeviceData(db.Model):
@@ -88,8 +61,10 @@ class rigDeviceData(db.Model):
     filePath = db.Column(db.Text)
     fileContent = db.Column(JSON)
     contextualTag = db.Column(JSON)
+    annotatorTag = db.Column(JSON)
     uploaded_at = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
     status = db.Column(db.Integer,default=0)
+    annotator_status = db.Column(db.Integer,default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
 
     def __repr__(self):

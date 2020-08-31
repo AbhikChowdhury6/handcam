@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 172bd9e11902
+Revision ID: 087107490981
 Revises: 
-Create Date: 2020-08-03 06:07:54.742890
+Create Date: 2020-06-25 18:15:08.902824
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '172bd9e11902'
+revision = '087107490981'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,7 +25,6 @@ def upgrade():
     sa.Column('image_file', sa.String(length=20), nullable=False),
     sa.Column('password', sa.String(length=60), nullable=False),
     sa.Column('rigName', sa.String(length=120), nullable=False),
-    sa.Column('isAnnotator', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('rigName'),
@@ -36,7 +35,6 @@ def upgrade():
     sa.Column('filename', sa.String(length=256), nullable=False),
     sa.Column('filePath', sa.Text(), nullable=True),
     sa.Column('fileContent', postgresql.JSON(astext_type=sa.Text()), nullable=True),
-    sa.Column('contextualTag', postgresql.JSON(astext_type=sa.Text()), nullable=True),
     sa.Column('uploaded_at', sa.DateTime(), nullable=False),
     sa.Column('status', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),

@@ -19,14 +19,12 @@ from werkzeug.utils import secure_filename
 from distutils.dir_util import copy_tree
 
 def file_upload(folderPath, pathfile,current_user):
-
     pathfilename = secure_filename(pathfile.filename)
     finalFileName = pathfilename.split(".")[0]
     root = folderPath +"/"+finalFileName
     zipPath = zipfile.ZipFile(pathfile, 'r')
 
     print("Root: " + root)
-
     if not os.path.exists(root + "/data"):
         os.makedirs(root + "/data")
 
@@ -35,19 +33,12 @@ def file_upload(folderPath, pathfile,current_user):
     
     zipFileList = zipPath.namelist()
     for value in zipFileList:
-        if value.endswith('.csv') or value.endswith('.jpg'):
+        tval = value.split("/")
+        tval = tval[len(tval)-1]
+        if (value.endswith('.csv') or value.endswith('.jpg')) and (tval.startswith("._")!=True):
            zipPath.extract(value, root + "/tmp")
            shutil.move(root+"/tmp/"+value,root + "/data/"+value.split("/")[-1])
-    
     shutil.rmtree(root+"/tmp")
-            
-
-    # zip = zipfile.ZipFile(pathfile)
-    # zip.extractall(folderPath +'/tmp/' + finalFileName)
-    # extracted_path = folderPath+'/tmp/' + finalFileName
-    # copy_tree(extracted_path + "/home/pi/", root)
-    # ## Deleting the extracted files from the temp folder
-    # shutil.rmtree(folderPath+'/tmp')
 
     timeFrame = {}
     videonums = {}
@@ -58,17 +49,19 @@ def file_upload(folderPath, pathfile,current_user):
     for path, dir, files in os.walk(root):
         for name in files:
             if fnmatch(name, pattern):
-                timestamp = name.split('-')[0]
-                dt_obj = datetime.fromtimestamp(float(timestamp)).time().strftime("%H:%M")
-                frameNo = ((name.split('-')[1]).split('.')[0])
-                if frameNo not in videonums:
-                    videonums[frameNo] = []
-                    timeFrame[frameNo] = dt_obj
-                    videonums[frameNo].append(filePath + name)
-                else:
-                    videonums[frameNo].append(filePath + name)
-    
-    
+                if name[0] != ".":
+                    print("Filename: " +  str(name))
+                    timestamp = name.split('-')[0]
+                    print("Timestamp : " + str(timestamp))
+                    dt_obj = datetime.fromtimestamp(float(timestamp)).time().strftime("%H:%M")
+                    print(dt_obj)
+                    frameNo = ((name.split('-')[1]).split('.')[0])
+                    if frameNo not in videonums:
+                        videonums[frameNo] = []
+                        timeFrame[frameNo] = dt_obj
+                        videonums[frameNo].append(filePath + name)
+                    else:
+                        videonums[frameNo].append(filePath + name)
 
     finalResult['videoNum'] = videonums
     finalResult['timeFrame'] = timeFrame

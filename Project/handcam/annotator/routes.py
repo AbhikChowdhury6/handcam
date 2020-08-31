@@ -7,6 +7,10 @@ from werkzeug.utils import secure_filename
 import os,errno,json
 import pandas as pd
 from datetime import datetime
+from handcam.main.imageStabilization import apply_imageStabilization
+from handcam.main.thresholdAlgorithm import apply_thresholdAlgo
+from handcam.main.csvAddition import roundThreeAddingtoCSV
+
 annotator = Blueprint('annotator', __name__)
 
 global result
@@ -46,6 +50,36 @@ def roundThree(fileId):
 	else:
 		return redirect(url_for('users.login'))
 
+@annotator.route("/roundThreeSave/<fileId>", methods=['GET', 'POST'])
+@login_required
+def roundThreeSave(fileId):
+	print("entered")
+	if current_user.is_authenticated and current_user.isAnnotator==1:
+		if request.method == 'POST':
+			data = (request.json['tagData'])
+			for value in data:
+					print(value)
+			rigValue =  rigDeviceData.query.filter_by(id=fileId).first_or_404()
+			print(rigValue.annotatorTag)
+			if rigValue.annotatorTag != None and rigValue.annotatorTag!="null":
+				tags = json.loads(rigValue.annotatorTag)
+				print("already present : ")
+				print(tags)
+				for value in data:
+					tags[value] = data[value]
+				rigValue.annotatorTag = json.dumps(tags)	
+			else:
+				tags = {}
+				for value in data:
+					tags[value] = data[value]
+				rigValue.annotatorTag = json.dumps(tags)
+			db.session.add(rigValue)
+			db.session.commit()
+			return json.dumps({'fileId':fileId,'flag':'success'})
+			
+	else:
+		return redirect(url_for('users.login'))
+
 @annotator.route("/round3Data/<fileId>", methods=['GET','POST'])
 @login_required
 def roundThreeData(fileId):
@@ -72,7 +106,7 @@ def roundThreeData(fileId):
 			print(rigValue)
 			result = json.loads(rigValue.fileContent)
 			timedata = result['timeFrame']
-			print("Round 1 display code is running...")
+			print("Round 3 display code is running...")
 			fresult = timeFrameData(timedata)
 			return render_template('annotator/round3.html',title='round3',fileId = fileId, timedata = fresult)
 	else:
@@ -84,3 +118,22 @@ def timeFrameData(timedata):
 	for value in tnums:
 		fresult[value] = timedata[value]
 	return fresult
+
+
+@annotator.route("/roundThreeSubmit/<fileId>", methods=['GET', 'POST'])
+@login_required
+def roundThreeSubmit(fileId):
+	if current_user.is_authenticated and current_user.isAnnotator==1:
+		if request.method == 'POST':
+			rigValue =  rigDeviceData.query.filter_by(id=fileId).first_or_404()
+			filePath = curr_app.root_path + (rigValue.filePath).split(".zip")[0]
+			data = json.loads(rigValue.annotatorTag)
+			apply_thresholdAlgo(filePath)
+			roundThreeAddingtoCSV(filePath,data)
+			rigValue.annotator_status=1
+			db.session.add(rigValue)
+			db.session.commit()
+			return json.dumps({'fileId':fileId,'flag':'success'})
+			
+	else:
+		return redirect(url_for('users.login'))
