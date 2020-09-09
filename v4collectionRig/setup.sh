@@ -66,4 +66,5 @@ mkdir /home/pi/data
 mkdir /media/pi
 echo "0" >> /home/pi/vidnum.txt
 
+echo "sudo nano /etc/rc.local"
 echo "cd /home/pi/handcam/v4collectionRig/ && python3 main.py &"
