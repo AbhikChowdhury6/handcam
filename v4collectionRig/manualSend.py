@@ -23,3 +23,8 @@ os.system("cd /home/pi/ && zip -r /home/pi/export/" + t[0] + "." + t[1][:3] + ".
 os.system("rm -r /home/pi/data/ && mkdir /home/pi/data")
 
 os.system("scp /home/pi/export/* " + target)
+
+#reset recording number to zero
+vidNF = open( "/home/pi/vidnum.txt", "w")
+vidNF.write("0")
+vidNF.close()
